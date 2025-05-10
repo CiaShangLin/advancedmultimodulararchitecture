@@ -21,14 +21,48 @@ android {
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
+        getByName(BuildTypes.RELEASE) {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            isMinifyEnabled = Build.Release.isMinifyEnabled
+            enableUnitTestCoverage = Build.Release.enableUnitTestCoverage
+            isDebuggable = Build.Release.isDebuggable
+        }
+
+        getByName(BuildTypes.DEBUG) {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            isMinifyEnabled = Build.Debug.isMinifyEnabled
+            enableUnitTestCoverage = Build.Debug.enableUnitTestCoverage
+            isDebuggable = Build.Debug.isDebuggable
+            versionNameSuffix = Build.Debug.versionNameSuffix
+            applicationIdSuffix = Build.Debug.applicationIdSuffix
+        }
+
+        create(BuildTypes.RELEASE_EXTERNAL_QA) {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            isMinifyEnabled = Build.ReleaseExternalQA.isMinifyEnabled
+            enableUnitTestCoverage = Build.ReleaseExternalQA.enableUnitTestCoverage
+            isDebuggable = Build.ReleaseExternalQA.isDebuggable
+            versionNameSuffix = Build.ReleaseExternalQA.versionNameSuffix
+            applicationIdSuffix = Build.ReleaseExternalQA.applicationIdSuffix
         }
     }
+
+    flavorDimensions.add(BuildDimensions.APP)
+    flavorDimensions.add(BuildDimensions.STORE)
+
+    productFlavors{
+
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
