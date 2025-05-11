@@ -56,6 +56,10 @@ android {
         }
     }
 
+    signingConfigs {
+
+    }
+
     flavorDimensions.add(BuildDimensions.APP)
     flavorDimensions.add(BuildDimensions.STORE)
 
