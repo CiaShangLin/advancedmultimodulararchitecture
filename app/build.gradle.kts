@@ -20,6 +20,13 @@ android {
         }
     }
 
+
+    signingConfigs {
+        BuildSigning.Debug.create(this)
+        BuildSigning.Release.create(this)
+        BuildSigning.ReleaseExternalQA.create(this)
+    }
+
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             proguardFiles(
@@ -29,36 +36,27 @@ android {
             isMinifyEnabled = Build.Release.isMinifyEnabled
             enableUnitTestCoverage = Build.Release.enableUnitTestCoverage
             isDebuggable = Build.Release.isDebuggable
+            signingConfig = signingConfigs.getByName(SigningTypes.RELEASE)
         }
-
         getByName(BuildTypes.DEBUG) {
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
             isMinifyEnabled = Build.Debug.isMinifyEnabled
             enableUnitTestCoverage = Build.Debug.enableUnitTestCoverage
             isDebuggable = Build.Debug.isDebuggable
             versionNameSuffix = Build.Debug.versionNameSuffix
             applicationIdSuffix = Build.Debug.applicationIdSuffix
-        }
+            signingConfig = signingConfigs.getByName(SigningTypes.DEBUG)
 
+        }
         create(BuildTypes.RELEASE_EXTERNAL_QA) {
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            isMinifyEnabled = Build.ReleaseExternalQA.isMinifyEnabled
-            enableUnitTestCoverage = Build.ReleaseExternalQA.enableUnitTestCoverage
-            isDebuggable = Build.ReleaseExternalQA.isDebuggable
-            versionNameSuffix = Build.ReleaseExternalQA.versionNameSuffix
-            applicationIdSuffix = Build.ReleaseExternalQA.applicationIdSuffix
+            isMinifyEnabled = Build.ReleaseExternalQa.isMinifyEnabled
+            enableUnitTestCoverage = Build.ReleaseExternalQa.enableUnitTestCoverage
+            isDebuggable = Build.ReleaseExternalQa.isDebuggable
+            versionNameSuffix = Build.ReleaseExternalQa.versionNameSuffix
+            applicationIdSuffix = Build.ReleaseExternalQa.applicationIdSuffix
+            signingConfig = signingConfigs.getByName(SigningTypes.RELEASE_EXTERNAL_QA)
         }
     }
 
-    signingConfigs {
-
-    }
 
     flavorDimensions.add(BuildDimensions.APP)
     flavorDimensions.add(BuildDimensions.STORE)

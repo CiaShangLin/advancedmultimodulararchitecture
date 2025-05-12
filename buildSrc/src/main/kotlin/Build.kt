@@ -13,7 +13,7 @@ sealed class Build {
         override val enableUnitTestCoverage = true
     }
 
-    object ReleaseExternalQA : Build() {
+    object ReleaseExternalQa : Build() {
         override val isMinifyEnabled = false
         override val isDebuggable = false
         override val applicationIdSuffix = ".QA"
