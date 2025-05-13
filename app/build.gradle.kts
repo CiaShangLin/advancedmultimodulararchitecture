@@ -22,9 +22,9 @@ android {
 
 
     signingConfigs {
-        BuildSigning.Debug.create(this)
-        BuildSigning.Release.create(this)
-        BuildSigning.ReleaseExternalQA.create(this)
+        BuildSigning.Debug(project).create(this)
+        BuildSigning.Release(project).create(this)
+        BuildSigning.ReleaseExternalQA(project).create(this)
     }
 
     buildTypes {
