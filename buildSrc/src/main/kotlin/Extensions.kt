@@ -9,7 +9,7 @@ fun Project.getLocalProperty(propertyName: String): String {
     val localProperties = Properties().apply {
         val localPropertiesFile = rootProject.file(LOCAL_PROPERTIES_FILE_NAME)
         if (localPropertiesFile.exists()) {
-            load(FileInputStream(localPropertiesFile))
+            load(localPropertiesFile.inputStream())
         }
     }
     return localProperties.getProperty(propertyName)
