@@ -3,7 +3,7 @@ import java.io.FileInputStream
 import java.util.Properties
 
 
-private const val LOCAL_PROPERTIES_FILE_NAME = "dev_credentials"
+private const val LOCAL_PROPERTIES_FILE_NAME = "dev_credentials.properties"
 
 fun Project.getLocalProperty(propertyName: String): String {
     val localProperties = Properties().apply {
