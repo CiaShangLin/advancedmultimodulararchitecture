@@ -1,3 +1,5 @@
+package flavors
+
 object FlavorType {
     const val GOOGLE = "google"
     const val HUAWEI = "huawei"

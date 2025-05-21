@@ -1,6 +1,7 @@
+package extensions
+
 import com.android.build.api.dsl.ApplicationBuildType
 import org.gradle.api.Project
-import java.io.FileInputStream
 import java.util.Properties
 
 

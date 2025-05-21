@@ -1,4 +1,10 @@
+package build
+
+import extensions.buildConfigBooleanField
+import extensions.buildConfigIntField
+import extensions.buildConfigStringField
 import com.android.build.api.dsl.ApplicationBuildType
+import extensions.getLocalProperty
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 

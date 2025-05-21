@@ -1,3 +1,5 @@
+package build
+
 object BuildConfig {
     const val APP_ID = "com.minafarid.advancedmultimodulararchitecture"
     const val COMPILE_SDK_VERSION = 34
