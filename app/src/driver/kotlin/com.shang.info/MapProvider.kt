@@ -1,3 +1,3 @@
-object MapProvider{
-    const val mapId="client 123"
+object MapProvider {
+    const val mapId = "client 123"
 }

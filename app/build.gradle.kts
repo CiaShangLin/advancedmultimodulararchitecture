@@ -22,6 +22,7 @@ plugins {
     id(plugs.BuildPlugins.ANDROID_APPLICATION)
     id(plugs.BuildPlugins.ANDROID)
     id(plugs.BuildPlugins.KAPT)
+    id(plugs.BuildPlugins.KTLINT)
 }
 
 android {
@@ -41,7 +42,6 @@ android {
         }
     }
 
-
     signingConfigs {
         BuildSigning.Debug(project).create(this)
         BuildSigning.Release(project).create(this)
@@ -55,7 +55,7 @@ android {
         BuildCreator.Release(project).create(this).apply {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
             signingConfig = signingConfigs.getByName(SigningTypes.RELEASE)
         }
@@ -63,7 +63,6 @@ android {
             signingConfig = signingConfigs.getByName(SigningTypes.RELEASE_EXTERNAL_QA)
         }
     }
-
 
     flavorDimensions.add(BuildDimensions.APP)
     flavorDimensions.add(BuildDimensions.STORE)

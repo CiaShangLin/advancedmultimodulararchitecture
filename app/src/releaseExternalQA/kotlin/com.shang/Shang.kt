@@ -1,3 +1,3 @@
-object Shang{
+object Shang {
     const val data = "Shang QA"
 }

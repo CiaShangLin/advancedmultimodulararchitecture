@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                         data = DataProvider.userName,
                         data2 = Shang.data,
                         mapId = MapProvider.mapId,
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
             }
@@ -38,10 +38,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String,data:String,data2:String,mapId:String, modifier: Modifier = Modifier) {
+fun Greeting(name: String, data: String, data2: String, mapId: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name! ${data} ${data2} ${mapId}",
-        modifier = modifier
+        text = "Hello $name! $data $data2 $mapId",
+        modifier = modifier,
     )
 }
 
