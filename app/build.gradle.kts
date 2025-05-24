@@ -1,6 +1,7 @@
 import build.BuildConfig
 import build.BuildCreator
 import build.BuildDimensions
+import deps.DependenciesVersions
 import deps.androidx
 import deps.hilt
 import deps.loginModule
@@ -86,7 +87,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = DependenciesVersions.KOTLIN_COMPILER
     }
     packaging {
         resources {
