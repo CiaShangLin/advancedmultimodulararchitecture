@@ -12,6 +12,7 @@ import deps.testDebugDeps
 import deps.testDeps
 import deps.testImplDeps
 import flavors.BuildFlavor
+import plugs.BuildPlugins
 import release.ReleaseConfig
 import signing.BuildSigning
 import signing.SigningTypes
@@ -23,6 +24,7 @@ plugins {
     id(plugs.BuildPlugins.ANDROID)
     id(plugs.BuildPlugins.KAPT)
     id(plugs.BuildPlugins.KTLINT)
+    id(plugs.BuildPlugins.SPOTLESS)
 }
 
 android {
