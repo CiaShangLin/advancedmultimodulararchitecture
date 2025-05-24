@@ -22,7 +22,7 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
             )
         indentWithSpaces(4)
         trimTrailingWhitespace()
-        //endWithNewline()
+        endWithNewline()
     }
 
     kotlin {
