@@ -7,20 +7,20 @@ import deps.testImplDeps
 import plugs.SharedLibraryGradlePlugin
 
 plugins {
-    id(plugs.BuildPlugins.ANDROID_LIBRARY)
+  id(plugs.BuildPlugins.ANDROID_LIBRARY)
 }
 
 apply<SharedLibraryGradlePlugin>()
 
 android {
-    namespace = "com.shang.login"
+  namespace = "com.shang.login"
 }
 
 dependencies {
-    androidx()
-    hilt()
-    room()
-    testDeps()
-    testImplDeps()
-    testDebugDeps()
+  androidx()
+  hilt()
+  room()
+  testDeps()
+  testImplDeps()
+  testDebugDeps()
 }
