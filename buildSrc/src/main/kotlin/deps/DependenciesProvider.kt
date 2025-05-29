@@ -62,3 +62,16 @@ fun DependencyHandler.loginModule() {
 fun DependencyHandler.homeModule() {
     moduleImplementation(project(":features:home"))
 }
+
+fun DependencyHandler.dataModule() {
+    moduleImplementation(project(":core:data"))
+}
+
+fun DependencyHandler.domainModule() {
+    moduleImplementation(project(":core:domain"))
+}
+
+fun DependencyHandler.presentationModule() {
+    moduleImplementation(project(":core:presentation"))
+}
+

@@ -23,3 +23,7 @@ rootProject.name = "AdvancedMultiModularArchitecture"
 include(":app")
 include(":features:home")
 include(":features:login")
+include(":core")
+include(":core:data")
+include(":core:domain")
+include(":core:presentation")
