@@ -39,6 +39,10 @@ sealed class BuildCreator(val name: String) {
                     BuildVariables.MAP_KEY,
                     project.getLocalProperty("dev.map_key")
                 )
+                buildConfigStringField(
+                    BuildVariables.PIN_CERTIFICATE,
+                    project.getLocalProperty("dev.pin_certificate")
+                )
             }
         }
 
@@ -72,6 +76,10 @@ sealed class BuildCreator(val name: String) {
                 buildConfigStringField(
                     BuildVariables.MAP_KEY,
                     project.getLocalProperty("release.map_key")
+                )
+                buildConfigStringField(
+                    BuildVariables.PIN_CERTIFICATE,
+                    project.getLocalProperty("release.pin_certificate")
                 )
             }
         }
@@ -109,6 +117,10 @@ sealed class BuildCreator(val name: String) {
                 buildConfigStringField(
                     BuildVariables.MAP_KEY,
                     project.getLocalProperty("dev.map_key")
+                )
+                buildConfigStringField(
+                    BuildVariables.PIN_CERTIFICATE,
+                    project.getLocalProperty("release.pin_certificate")
                 )
             }
         }
