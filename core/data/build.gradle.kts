@@ -1,8 +1,6 @@
-import deps.androidx
 import deps.hilt
 import deps.okHttp
 import deps.retrofit
-import deps.room
 import deps.testDebugDeps
 import deps.testDeps
 import deps.testImplDeps
