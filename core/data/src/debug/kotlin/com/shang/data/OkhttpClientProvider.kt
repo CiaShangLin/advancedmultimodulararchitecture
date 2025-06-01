@@ -9,7 +9,7 @@ import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 import javax.security.cert.CertificateException
 
-class OkHttpClientProvider : OkHttpClientProviderInterface {
+class OkHttpClientProvider : OkhttpClientProviderInterface {
     private var dispatcher = Dispatcher()
 
     override fun getOkHttpClient(pin: String): OkHttpClient.Builder {
@@ -51,7 +51,7 @@ class OkHttpClientProvider : OkHttpClientProviderInterface {
         }
     }
 
-    override fun cancelAllRequests() {
+    override fun cancelAllRequest() {
         dispatcher.cancelAll()
     }
 }
