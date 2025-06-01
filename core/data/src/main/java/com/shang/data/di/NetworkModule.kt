@@ -21,45 +21,45 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
-    @Provides
-    @Singleton
-    fun providerOkhttpClientProvider(): OkhttpClientProviderInterface {
-        return OkHttpClientProvider()
-    }
+  @Provides
+  @Singleton
+  fun providerOkhttpClientProvider(): OkhttpClientProviderInterface {
+    return OkHttpClientProvider()
+  }
 
-    @Provides
-    @Singleton
-    fun providerOkhttpCallFactory(
-        @Named(LOGGING_INTERCEPTOR_TAG) OkhttpLoggerIntercept: HttpLoggingInterceptor,
-        @Named(HEADER_INTERCEPTOR_TAG) headerIntercept: HeaderIntercept,
-        okhttpClientProvider: OkhttpClientProviderInterface
-    ): Call.Factory {
-        return okhttpClientProvider.getOkHttpClient(BuildConfig.PIN_CERTIFICATE)
-            .addInterceptor(OkhttpLoggerIntercept)
-            .addInterceptor(headerIntercept)
-            .retryOnConnectionFailure(true)
-            .followRedirects(false)
-            .followSslRedirects(false)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .build()
-    }
+  @Provides
+  @Singleton
+  fun providerOkhttpCallFactory(
+    @Named(LOGGING_INTERCEPTOR_TAG) OkhttpLoggerIntercept: HttpLoggingInterceptor,
+    @Named(HEADER_INTERCEPTOR_TAG) headerIntercept: HeaderIntercept,
+    okhttpClientProvider: OkhttpClientProviderInterface,
+  ): Call.Factory {
+    return okhttpClientProvider.getOkHttpClient(BuildConfig.PIN_CERTIFICATE)
+      .addInterceptor(OkhttpLoggerIntercept)
+      .addInterceptor(headerIntercept)
+      .retryOnConnectionFailure(true)
+      .followRedirects(false)
+      .followSslRedirects(false)
+      .readTimeout(60, TimeUnit.SECONDS)
+      .writeTimeout(60, TimeUnit.SECONDS)
+      .connectTimeout(60, TimeUnit.SECONDS)
+      .build()
+  }
 
-    @Provides
-    @Singleton
-    fun providerRetrofit(okhttpClient:OkHttpClient): Retrofit {
-        val builder = Retrofit.Builder()
-            .baseUrl("")
-            .client(okhttpClient)
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+  @Provides
+  @Singleton
+  fun providerRetrofit(okhttpClient: OkHttpClient): Retrofit {
+    val builder = Retrofit.Builder()
+      .baseUrl("")
+      .client(okhttpClient)
+      .addCallAdapterFactory(CoroutineCallAdapterFactory())
 
-        return builder .build()
-    }
+    return builder.build()
+  }
 
-    @Provides
-    @Singleton
-    fun providerServiceFactory(retrofit: Retrofit): ServiceFactory {
-        return ServiceFactory(retrofit)
-    }
+  @Provides
+  @Singleton
+  fun providerServiceFactory(retrofit: Retrofit): ServiceFactory {
+    return ServiceFactory(retrofit)
+  }
 }

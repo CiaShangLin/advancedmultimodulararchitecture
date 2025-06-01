@@ -1,6 +1,5 @@
 package com.shang.data.di
 
-
 const val ACCESS_TOKEN_TAG = "AccessToken"
 const val CLIENT_ID_TAG = "ClientId"
 const val LANGUAGE_TAG = "Language"

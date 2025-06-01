@@ -15,25 +15,25 @@ const val ARABIC_LANGUAGE = "ar-SA"
 const val ENGLISH_LANGUAGE = "en-US"
 
 class HeaderIntercept(
-    private val clientId: String,
-    private val accessTokenProvider: () -> String?,
-    private val languageProvider: () -> Locale,
+  private val clientId: String,
+  private val accessTokenProvider: () -> String?,
+  private val languageProvider: () -> Locale,
 ) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
-        val requestBuilder = request.newBuilder()
+  override fun intercept(chain: Interceptor.Chain): Response {
+    val request = chain.request()
+    val requestBuilder = request.newBuilder()
 
-        val language = if (languageProvider() == Locale.ENGLISH) {
-            ENGLISH_LANGUAGE
-        } else {
-            ARABIC_LANGUAGE
-        }
-        requestBuilder.addHeader(ACCEPT_HEADER, JSON)
-        requestBuilder.addHeader(CONTENT_TYPE_HEADER, JSON)
-        requestBuilder.addHeader(ACCEPT_LANGUAGE_HEADER, language)
-        accessTokenProvider()?.let {
-            requestBuilder.addHeader(AUTHORIZATION_HEADER, "Bearer $it")
-        }
-        return chain.proceed(requestBuilder.build())
+    val language = if (languageProvider() == Locale.ENGLISH) {
+      ENGLISH_LANGUAGE
+    } else {
+      ARABIC_LANGUAGE
     }
+    requestBuilder.addHeader(ACCEPT_HEADER, JSON)
+    requestBuilder.addHeader(CONTENT_TYPE_HEADER, JSON)
+    requestBuilder.addHeader(ACCEPT_LANGUAGE_HEADER, language)
+    accessTokenProvider()?.let {
+      requestBuilder.addHeader(AUTHORIZATION_HEADER, "Bearer $it")
+    }
+    return chain.proceed(requestBuilder.build())
+  }
 }
