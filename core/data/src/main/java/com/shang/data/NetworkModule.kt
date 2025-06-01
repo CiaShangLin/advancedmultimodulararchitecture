@@ -6,18 +6,15 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Call
 import okhttp3.Interceptor
-import okhttp3.OkHttp
-import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
-import kotlin.math.log
 
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
-
 
     @Provides
     @Named("clientId")
@@ -37,14 +34,13 @@ class NetworkModule {
         return { Locale.ENGLISH }
     }
 
-
     @Provides
     @Singleton
     @Named("HeaderIntercept")
     fun providerHeaderIntercept(
         @Named("clientId") clientId: String,
         @Named("accessToken") accessToken: () -> String?,
-        @Named("language") language: () -> Locale
+        @Named("language") language: () -> Locale,
     ): Interceptor {
         return HeaderIntercept(clientId, accessToken, language)
     }
@@ -66,13 +62,23 @@ class NetworkModule {
         return logging
     }
 
+    @Provides
+    @Singleton
+    fun providerOkhttpClientProvider(): OkhttpClientProviderInterface {
+        return OkHttpClientProvider()
+    }
 
     @Provides
     @Singleton
     @Named("OkhttpCallFactory")
-    fun providerOkhttpCallFactory(interceptor: Interceptor): Call.Factory {
-        return OkHttpClient.Builder()
-            .addInterceptor(interceptor)
+    fun providerOkhttpCallFactory(
+        @Named("OkhttpLoggerIntercept") OkhttpLoggerIntercept: HttpLoggingInterceptor,
+        @Named("HeaderIntercept") headerIntercept:HeaderIntercept,
+        okhttpClientProvider: OkhttpClientProviderInterface
+    ): Call.Factory {
+        return okhttpClientProvider.getOkHttpClient(BuildConfig.PIN_CERTIFICATE)
+            .addInterceptor(OkhttpLoggerIntercept)
+            .addInterceptor(headerIntercept)
             .retryOnConnectionFailure(true)
             .followRedirects(false)
             .followSslRedirects(false)
