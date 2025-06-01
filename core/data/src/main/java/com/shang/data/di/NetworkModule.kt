@@ -1,5 +1,11 @@
-package com.shang.data
+package com.shang.data.di
 
+import com.shang.data.interceptors.ACCEPT_HEADER
+import com.shang.data.BuildConfig
+import com.shang.data.interceptors.CLIENT_ID_HEADER
+import com.shang.data.interceptors.HeaderIntercept
+import com.shang.data.OkHttpClientProvider
+import com.shang.data.okhttp.OkhttpClientProviderInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,37 +23,37 @@ import javax.inject.Singleton
 class NetworkModule {
 
     @Provides
-    @Named("clientId")
+    @Named(CLIENT_ID_TAG)
     fun providerClientId(): String {
         return ""
     }
 
     @Provides
-    @Named("accessToken")
+    @Named(ACCESS_TOKEN_TAG)
     fun providerAccessToken(): () -> String? {
         return { "" }
     }
 
     @Provides
-    @Named("language")
+    @Named(LANGUAGE_TAG)
     fun providerLanguage(): () -> Locale {
         return { Locale.ENGLISH }
     }
 
     @Provides
     @Singleton
-    @Named("HeaderIntercept")
+    @Named(HEADER_INTERCEPTOR_TAG)
     fun providerHeaderIntercept(
-        @Named("clientId") clientId: String,
-        @Named("accessToken") accessToken: () -> String?,
-        @Named("language") language: () -> Locale,
+        @Named(CLIENT_ID_TAG) clientId: String,
+        @Named(ACCESS_TOKEN_TAG) accessToken: () -> String?,
+        @Named(LANGUAGE_TAG) language: () -> Locale,
     ): Interceptor {
         return HeaderIntercept(clientId, accessToken, language)
     }
 
     @Provides
     @Singleton
-    @Named("OkhttpLoggerIntercept")
+    @Named(LOGGING_INTERCEPTOR_TAG)
     fun providerOkhttpLoggerIntercept(): okhttp3.logging.HttpLoggingInterceptor {
         val logging = okhttp3.logging.HttpLoggingInterceptor()
         if (BuildConfig.DEBUG) {
@@ -70,10 +76,10 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    @Named("OkhttpCallFactory")
+    @Named(OKHTTP_CALL_FACTORY_TAG)
     fun providerOkhttpCallFactory(
-        @Named("OkhttpLoggerIntercept") OkhttpLoggerIntercept: HttpLoggingInterceptor,
-        @Named("HeaderIntercept") headerIntercept:HeaderIntercept,
+        @Named(LOGGING_INTERCEPTOR_TAG) OkhttpLoggerIntercept: HttpLoggingInterceptor,
+        @Named(HEADER_INTERCEPTOR_TAG) headerIntercept: HeaderIntercept,
         okhttpClientProvider: OkhttpClientProviderInterface
     ): Call.Factory {
         return okhttpClientProvider.getOkHttpClient(BuildConfig.PIN_CERTIFICATE)

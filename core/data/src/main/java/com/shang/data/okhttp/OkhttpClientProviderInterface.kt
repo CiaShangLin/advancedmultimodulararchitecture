@@ -1,4 +1,4 @@
-package com.shang.data
+package com.shang.data.okhttp
 
 import okhttp3.OkHttpClient
 

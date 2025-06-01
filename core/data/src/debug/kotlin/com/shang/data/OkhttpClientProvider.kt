@@ -1,5 +1,6 @@
 package com.shang.data
 
+import com.shang.data.okhttp.OkhttpClientProviderInterface
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import java.security.cert.X509Certificate
