@@ -17,4 +17,6 @@ object DependenciesVersions {
     const val HILT_COMPOSE = "1.2.0"
     const val ROOM = "2.6.1"
     const val KOTLIN_COMPILER = "1.5.1"
+
+    const val WORK = "2.7.1"
 }

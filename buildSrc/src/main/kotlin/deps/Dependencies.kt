@@ -32,4 +32,6 @@ object Dependencies {
     const val roomRuntime = "androidx.room:room-runtime:${DependenciesVersions.ROOM}"
     const val roomCompiler = "androidx.room:room-compiler:${DependenciesVersions.ROOM}"
     const val roomKtx = "androidx.room:room-ktx:${DependenciesVersions.ROOM}"
+
+    const val workKtx = "androidx.work:work-runtime-ktx:${DependenciesVersions.WORK}"
 }
