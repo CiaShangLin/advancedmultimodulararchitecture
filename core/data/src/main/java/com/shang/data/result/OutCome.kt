@@ -3,40 +3,40 @@ package com.shang.data.result
 import com.shang.data.model.ErrorMessage
 
 sealed class OutCome<T> {
-  abstract fun isSuccess(): Boolean
+    abstract fun isSuccess(): Boolean
 
-  open val errorMessage: ErrorMessage? = null
+    open val errorMessage: ErrorMessage? = null
 
-  abstract suspend fun accept(useCase: UseCase<T>)
+    abstract suspend fun accept(useCase: UseCase<T>)
 
-  class Success<T>(val data: T) : OutCome<T>() {
-    override fun isSuccess(): Boolean = true
-    override suspend fun accept(useCase: UseCase<T>) {
-      useCase.onSuccess(this)
+    class Success<T>(val data: T) : OutCome<T>() {
+        override fun isSuccess(): Boolean = true
+        override suspend fun accept(useCase: UseCase<T>) {
+            useCase.onSuccess(this)
+        }
     }
-  }
 
-  class Error(private val _errorMessage: ErrorMessage) : OutCome<Nothing>() {
+    class Error<T>(private val _errorMessage: ErrorMessage) : OutCome<T>() {
 
-    override val errorMessage: ErrorMessage = _errorMessage
+        override val errorMessage: ErrorMessage = _errorMessage
 
-    override fun isSuccess(): Boolean = false
+        override fun isSuccess(): Boolean = false
 
-    override suspend fun accept(useCase: UseCase<Nothing>) {
-      useCase.onError(_errorMessage)
+        override suspend fun accept(useCase: UseCase<T>) {
+            useCase.onError(_errorMessage)
+        }
     }
-  }
 
-  class Empty : OutCome<Nothing>() {
-    override fun isSuccess(): Boolean = true
-    override suspend fun accept(useCase: UseCase<Nothing>) {
-      useCase.onEmpty()
+    class Empty<T> : OutCome<T>() {
+        override fun isSuccess(): Boolean = true
+        override suspend fun accept(useCase: UseCase<T>) {
+            useCase.onEmpty()
+        }
     }
-  }
 
-  companion object {
-    fun <T> success(data: T) = Success<T>(data)
-    fun error(errorMessage: ErrorMessage) = Error(errorMessage)
-    fun empty() = Empty()
-  }
+    companion object {
+        fun <T> success(data: T) = Success<T>(data)
+        fun <T> error(errorMessage: ErrorMessage) = Error<T>(errorMessage)
+        fun <T> empty() = Empty<T>()
+    }
 }
