@@ -15,4 +15,28 @@ sealed class OutCome<T> {
       useCase.onSuccess(this)
     }
   }
+
+  class Error(private val _errorMessage: ErrorMessage) : OutCome<Nothing>() {
+
+    override val errorMessage: ErrorMessage = _errorMessage
+
+    override fun isSuccess(): Boolean = false
+
+    override suspend fun accept(useCase: UseCase<Nothing>) {
+      useCase.onError(_errorMessage)
+    }
+  }
+
+  class Empty : OutCome<Nothing>() {
+    override fun isSuccess(): Boolean = true
+    override suspend fun accept(useCase: UseCase<Nothing>) {
+      useCase.onEmpty()
+    }
+  }
+
+  companion object {
+    fun <T> success(data: T) = Success<T>(data)
+    fun error(errorMessage: ErrorMessage) = Error(errorMessage)
+    fun empty() = Empty()
+  }
 }
