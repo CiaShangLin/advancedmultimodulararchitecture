@@ -1,4 +1,4 @@
-package com.shang.login.domain
+package com.shang.login.data.service
 
 import com.shang.login.data.request.LoginRequestBody
 import com.shang.login.data.response.LoginResponse

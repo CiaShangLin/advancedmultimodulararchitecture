@@ -1,4 +1,5 @@
 import deps.androidx
+import deps.dataModule
 import deps.hilt
 import deps.retrofit
 import deps.room
@@ -18,6 +19,7 @@ android {
 }
 
 dependencies {
+  dataModule()
   androidx()
   retrofit()
   hilt()
