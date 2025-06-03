@@ -6,18 +6,18 @@ import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 
 class OkHttpClientProvider : OkhttpClientProviderInterface {
-    private var dispatcher = Dispatcher()
+  private var dispatcher = Dispatcher()
 
-    override fun getOkHttpClient(pin: String): OkHttpClient.Builder {
-        val certificatePinner = CertificatePinner.Builder().add("*.yourdomain.com", pin).build()
+  override fun getOkHttpClient(pin: String): OkHttpClient.Builder {
+    val certificatePinner = CertificatePinner.Builder().add("*.yourdomain.com", pin).build()
 
-        val builder = OkHttpClient.Builder()
-        builder.dispatcher(dispatcher)
-        builder.certificatePinner(certificatePinner)
-        return builder
-    }
+    val builder = OkHttpClient.Builder()
+    builder.dispatcher(dispatcher)
+    builder.certificatePinner(certificatePinner)
+    return builder
+  }
 
-    override fun cancelAllRequest() {
-        dispatcher.cancelAll()
-    }
+  override fun cancelAllRequest() {
+    dispatcher.cancelAll()
+  }
 }
