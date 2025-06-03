@@ -2,5 +2,5 @@ package com.shang.data.connectivity
 
 interface NetworkMonitorInterface {
 
-  fun hasConnectivity(): Boolean
+    fun hasConnectivity(): Boolean
 }
