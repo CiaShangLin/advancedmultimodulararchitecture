@@ -1,7 +1,7 @@
 package com.shang.login.data.service
 
 import com.shang.login.data.request.LoginRequestBody
-import com.shang.login.data.response.LoginResponse
+import com.shang.login.data.response.UserResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.Body
@@ -16,7 +16,7 @@ interface LoginService {
     @POST("$BASE_URL/Auth/login")
     fun login(
         @Body body: LoginRequestBody,
-    ): Deferred<Response<LoginResponse>>
+    ): Deferred<Response<UserResponse>>
 
     @POST("$BASE_URL/Auth/ForgetPassword")
     fun forgetPassword(
