@@ -5,5 +5,5 @@ import com.shang.login.data.request.LoginRequestBody
 import com.shang.login.data.response.UserResponse
 
 interface LoginRemote {
-   suspend fun login(loginRequestBody: LoginRequestBody): OutCome<UserResponse>
+  suspend fun login(loginRequestBody: LoginRequestBody): OutCome<UserResponse>
 }

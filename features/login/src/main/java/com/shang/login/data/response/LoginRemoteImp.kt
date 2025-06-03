@@ -8,11 +8,11 @@ import com.shang.login.data.service.LoginService
 import com.shang.login.data.source.LoginRemote
 
 class LoginRemoteImp(private val networkDataService: NetworkDataSource<LoginService>) : LoginRemote {
-    override suspend fun login(loginRequestBody: LoginRequestBody): OutCome<UserResponse> {
-        return networkDataService.performRequest(
-            request = { login(loginRequestBody).await() },
-            onSuccess = { response, headers -> OutCome.success(response, headers) },
-            onError = { errorResponse, code -> OutCome.error(errorResponse.toDomain(code)) },
-        )
-    }
+  override suspend fun login(loginRequestBody: LoginRequestBody): OutCome<UserResponse> {
+    return networkDataService.performRequest(
+      request = { login(loginRequestBody).await() },
+      onSuccess = { response, headers -> OutCome.success(response) },
+      onError = { errorResponse, code -> OutCome.error(errorResponse.toDomain(code)) },
+    )
+  }
 }
