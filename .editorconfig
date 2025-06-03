@@ -2,8 +2,6 @@
 ktlint_function_signature_body_expression_wrapping=always
 # disabled_rules=no-wildcard-imports
 ktlint_standard= enabled
-indent_size = 4
-indent_style = space
 
 # Disable all rules from the `standard` rule set provided by KtLint
 # ktlint_standard_final-newline = enabled # Enables the `final-newline` rule in the `standard` rule set provided by KtLint

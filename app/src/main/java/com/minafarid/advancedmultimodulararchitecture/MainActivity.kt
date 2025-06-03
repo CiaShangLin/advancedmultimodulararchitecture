@@ -18,31 +18,31 @@ import com.minafarid.advancedmultimodulararchitecture.ui.theme.AdvancedMultiModu
 import com.minafarid.provider.DataProvider
 
 class MainActivity : ComponentActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    enableEdgeToEdge()
-    setContent {
-      AdvancedMultiModularArchitectureTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-          Greeting(
-            name = stringResource(R.string.app_name),
-            data = DataProvider.userName,
-            data2 = Shang.data,
-            mapId = MapProvider.mapId,
-            modifier = Modifier.padding(innerPadding),
-          )
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            AdvancedMultiModularArchitectureTheme {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Greeting(
+                        name = stringResource(R.string.app_name),
+                        data = DataProvider.userName,
+                        data2 = Shang.data,
+                        mapId = MapProvider.mapId,
+                        modifier = Modifier.padding(innerPadding),
+                    )
+                }
+            }
         }
-      }
     }
-  }
 }
 
 @Composable
 fun Greeting(name: String, data: String, data2: String, mapId: String, modifier: Modifier = Modifier) {
-  Text(
-    text = "Hello $name! $data $data2 $mapId",
-    modifier = modifier,
-  )
+    Text(
+        text = "Hello $name! $data $data2 $mapId",
+        modifier = modifier,
+    )
 }
 
 @Preview(showBackground = true)

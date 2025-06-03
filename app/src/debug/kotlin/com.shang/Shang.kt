@@ -1,3 +1,3 @@
 object Shang {
-  const val data = "Shang Debug"
+    const val data = "Shang Debug"
 }

@@ -1,3 +1,3 @@
 object DataProvider {
-  const val userName = "Huawei DataProvider"
+    const val userName = "Huawei DataProvider"
 }
