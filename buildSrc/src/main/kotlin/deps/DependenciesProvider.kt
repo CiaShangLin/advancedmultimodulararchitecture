@@ -44,6 +44,12 @@ fun DependencyHandler.androidx() {
     implementation(Dependencies.workKtx)
 }
 
+fun DependencyHandler.dataStore() {
+    implementation(Dependencies.datastore)
+    implementation(Dependencies.kotlinCollections)
+    implementation(Dependencies.kotlinSerilaizations)
+}
+
 
 fun DependencyHandler.testDeps() {
     testImplementation(TestDependencies.ANDROIDX_JUNIT)
