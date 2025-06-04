@@ -10,14 +10,14 @@ import com.shang.login.domain.mapper.LoginMapperInterface
 import com.shang.login.domain.model.User
 
 class LoginRemoteImp(
-  private val networkDataService: NetworkDataSource<LoginService>,
-  private val loginMapper: LoginMapperInterface,
+    private val networkDataService: NetworkDataSource<LoginService>,
+    private val loginMapper: LoginMapperInterface,
 ) : LoginRemote {
-  override suspend fun login(loginRequestBody: LoginRequestBody): OutCome<User> {
-    return networkDataService.performRequest(
-      request = { login(loginRequestBody).await() },
-      onSuccess = { response, _ -> OutCome.success(loginMapper.toDomain(response)) },
-      onError = { errorResponse, code -> OutCome.error(errorResponse.toDomain(code)) },
-    )
-  }
+    override suspend fun login(loginRequestBody: LoginRequestBody): OutCome<User> {
+        return networkDataService.performRequest(
+            request = { login(loginRequestBody).await() },
+            onSuccess = { response, _ -> OutCome.success(loginMapper.toDomain(response)) },
+            onError = { errorResponse, code -> OutCome.error(errorResponse.toDomain(code)) },
+        )
+    }
 }

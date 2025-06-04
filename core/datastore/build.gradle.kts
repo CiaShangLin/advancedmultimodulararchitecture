@@ -5,18 +5,18 @@ import deps.testImplDeps
 import plugs.SharedLibraryGradlePlugin
 
 plugins {
-  id(plugs.BuildPlugins.ANDROID_LIBRARY)
+    id(plugs.BuildPlugins.ANDROID_LIBRARY)
 }
 
 apply<SharedLibraryGradlePlugin>()
 
 android {
-  namespace = "com.shang.datastore"
+    namespace = "com.shang.datastore"
 }
 
 dependencies {
-  dataStore()
-  testDeps()
-  testImplDeps()
-  testDebugDeps()
+    dataStore()
+    testDeps()
+    testImplDeps()
+    testDebugDeps()
 }

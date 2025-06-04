@@ -8,21 +8,21 @@ import deps.testImplDeps
 import plugs.SharedLibraryGradlePlugin
 
 plugins {
-  id(plugs.BuildPlugins.ANDROID_LIBRARY)
+    id(plugs.BuildPlugins.ANDROID_LIBRARY)
 }
 
 apply<SharedLibraryGradlePlugin>()
 
 android {
-  namespace = "com.shang.data"
+    namespace = "com.shang.data"
 }
 
 dependencies {
-  okHttp()
-  retrofit()
-  hilt()
-  dataStore()
-  testDeps()
-  testImplDeps()
-  testDebugDeps()
+    okHttp()
+    retrofit()
+    hilt()
+    dataStore()
+    testDeps()
+    testImplDeps()
+    testDebugDeps()
 }

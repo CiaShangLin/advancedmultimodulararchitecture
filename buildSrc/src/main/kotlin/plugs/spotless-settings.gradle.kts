@@ -25,23 +25,23 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         endWithNewline()
     }
 
-    kotlin {
-        target(
-            fileTree(
-                mapOf(
-                    "dir" to ".",
-                    "include" to listOf("**/*.kt"),
-                    "exclude" to listOf("**/build/**", "**/buildSrc/**", "**/.*")
-                )
-            )
-        )
-        trimTrailingWhitespace()
-        indentWithSpaces()
-        endWithNewline()
-        ktlint("0.49.0")
-            .userData(mapOf("android" to "true", "max_line_length" to "120"))
-            .editorConfigOverride(mapOf("indent_size" to 2))
-    }
+//    kotlin {
+//        target(
+//            fileTree(
+//                mapOf(
+//                    "dir" to ".",
+//                    "include" to listOf("**/*.kt"),
+//                    "exclude" to listOf("**/build/**", "**/buildSrc/**", "**/.*")
+//                )
+//            )
+//        )
+//        trimTrailingWhitespace()
+//        indentWithSpaces()
+//        endWithNewline()
+//        ktlint("0.49.0")
+//            .userData(mapOf("android" to "true", "max_line_length" to "120"))
+//            .editorConfigOverride(mapOf("indent_size" to 2))
+//    }
 
     java {
         target(
@@ -66,28 +66,28 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         // googleJavaFormat is a formatter that follows the Google Java Style Guide.
     }
 
-    kotlinGradle {
-        target(
-            fileTree(
-                mapOf(
-                    "dir" to ".",
-                    "include" to listOf("**/*.gradle.kts", "*.gradle.kts"),
-                    "exclude" to listOf("**/build/**")
-                )
-            )
-        )
-        trimTrailingWhitespace()
-        indentWithSpaces()
-        endWithNewline()
-        ktlint("0.49.0")
-            .userData(mapOf("android" to "true"))
-            .editorConfigOverride(mapOf("indent_size" to 2))
-    }
+//    kotlinGradle {
+//        target(
+//            fileTree(
+//                mapOf(
+//                    "dir" to ".",
+//                    "include" to listOf("**/*.gradle.kts", "*.gradle.kts"),
+//                    "exclude" to listOf("**/build/**")
+//                )
+//            )
+//        )
+//        trimTrailingWhitespace()
+//        indentWithSpaces()
+//        endWithNewline()
+//        ktlint("0.49.0")
+//            .userData(mapOf("android" to "true"))
+//            .editorConfigOverride(mapOf("indent_size" to 2))
+//    }
 }
 
-//tasks.named("preBuild") {
-//    dependsOn("spotlessCheck")
-//}
-//tasks.named("preBuild") {
-//    dependsOn("spotlessApply")
-//}
+tasks.named("preBuild") {
+    dependsOn("spotlessCheck")
+}
+tasks.named("preBuild") {
+    dependsOn("spotlessApply")
+}

@@ -23,40 +23,40 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-  @Provides
-  @Singleton
-  fun provideLoginServiceFactory(serviceFactory: ServiceFactory): LoginService {
-    return serviceFactory.createService(LoginService::class.java)
-  }
+    @Provides
+    @Singleton
+    fun provideLoginServiceFactory(serviceFactory: ServiceFactory): LoginService {
+        return serviceFactory.createService(LoginService::class.java)
+    }
 
-  @Provides
-  @Singleton
-  fun provideNetworkDataSource(
-    loginService: LoginService,
-    gson: Gson,
-    networkMonitorInterface: NetworkMonitorInterface,
-    @Named(USER_ID_TAG) userIdProvider: () -> String,
-  ): NetworkDataSource<LoginService> {
-    return NetworkDataSource(
-      loginService,
-      gson,
-      networkMonitorInterface,
-      userIdProvider,
-    )
-  }
+    @Provides
+    @Singleton
+    fun provideNetworkDataSource(
+        loginService: LoginService,
+        gson: Gson,
+        networkMonitorInterface: NetworkMonitorInterface,
+        @Named(USER_ID_TAG) userIdProvider: () -> String,
+    ): NetworkDataSource<LoginService> {
+        return NetworkDataSource(
+            loginService,
+            gson,
+            networkMonitorInterface,
+            userIdProvider,
+        )
+    }
 
-  @Provides
-  @Singleton
-  fun provideLoginMapper(@Named(DISPATCHER_DEFAULT_TAG) dispatcher: CoroutineDispatcher): LoginMapperInterface {
-    return LoginMapperImp(dispatcher)
-  }
+    @Provides
+    @Singleton
+    fun provideLoginMapper(@Named(DISPATCHER_DEFAULT_TAG) dispatcher: CoroutineDispatcher): LoginMapperInterface {
+        return LoginMapperImp(dispatcher)
+    }
 
-  @Provides
-  @Singleton
-  fun provideLoginRemoteImplementer(
-    networkDataSource: NetworkDataSource<LoginService>,
-    loginMapper: LoginMapperInterface,
-  ): LoginRemote {
-    return LoginRemoteImp(networkDataSource, loginMapper)
-  }
+    @Provides
+    @Singleton
+    fun provideLoginRemoteImplementer(
+        networkDataSource: NetworkDataSource<LoginService>,
+        loginMapper: LoginMapperInterface,
+    ): LoginRemote {
+        return LoginRemoteImp(networkDataSource, loginMapper)
+    }
 }
