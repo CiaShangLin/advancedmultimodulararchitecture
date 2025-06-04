@@ -33,11 +33,6 @@ fun DependencyHandler.hilt() {
     kapt(Dependencies.hiltCompilerKapt)
 }
 
-fun DependencyHandler.work() {
-    implementation(Dependencies.workKtx)
-}
-
-
 fun DependencyHandler.androidx() {
     implementation(Dependencies.ANDROIDX_CORE)
     implementation(Dependencies.ANDROIDX_LIFECYCLE_RUNTIME_KTX)
@@ -46,6 +41,7 @@ fun DependencyHandler.androidx() {
     implementation(Dependencies.ANDROIDX_UI_GRAPHICS)
     implementation(Dependencies.ANDROIDX_UI_TOOLING_PREVIEW)
     implementation(Dependencies.ANDROIDX_MATERIAL3)
+    implementation(Dependencies.workKtx)
 }
 
 

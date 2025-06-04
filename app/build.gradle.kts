@@ -14,7 +14,6 @@ import deps.room
 import deps.testDebugDeps
 import deps.testDeps
 import deps.testImplDeps
-import deps.work
 import flavors.BuildFlavor
 import plugs.BuildPlugins
 import release.ReleaseConfig
@@ -112,7 +111,6 @@ dependencies {
   presentationModule()
   androidx()
   hilt()
-  work()
   room()
   okHttp()
   retrofit()
