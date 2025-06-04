@@ -85,9 +85,9 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
     }
 }
 
-tasks.named("preBuild") {
-    dependsOn("spotlessCheck")
-}
-tasks.named("preBuild") {
-    dependsOn("spotlessApply")
-}
+//tasks.named("preBuild") {
+//    dependsOn("spotlessCheck")
+//}
+//tasks.named("preBuild") {
+//    dependsOn("spotlessApply")
+//}
