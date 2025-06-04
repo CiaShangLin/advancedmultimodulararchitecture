@@ -7,3 +7,7 @@ const val USER_ID_TAG = "UserId"
 const val HEADER_INTERCEPTOR_TAG = "HeaderInterceptor"
 const val LOGGING_INTERCEPTOR_TAG = "OkHttpLoggingInterceptor"
 const val HEADER_LOCATION = "Location"
+
+const val DISPATCHER_MAIN_TAG = "dispatcherMain"
+const val DISPATCHER_IO_TAG = "dispatcherIO"
+const val DISPATCHER_DEFAULT_TAG = "dispatcherDefault"

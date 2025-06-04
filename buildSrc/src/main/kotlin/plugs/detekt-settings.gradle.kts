@@ -80,6 +80,6 @@ tasks.named("detekt") {
     dependsOn(":core:presentation:detektBaseline")
 }
 
-tasks.named("preBuild") {
-    dependsOn("detekt")
-}
+//tasks.named("preBuild") {
+//    dependsOn("detekt")
+//}

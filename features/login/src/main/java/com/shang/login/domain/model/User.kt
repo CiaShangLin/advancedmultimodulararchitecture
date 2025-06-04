@@ -1,4 +1,4 @@
-package com.shang.login.domain
+package com.shang.login.domain.model
 
 data class User(
   val id: String,
