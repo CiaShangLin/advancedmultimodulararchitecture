@@ -50,6 +50,11 @@ fun DependencyHandler.dataStore() {
     implementation(Dependencies.kotlinSerilaizations)
 }
 
+fun DependencyHandler.protoDataStore() {
+    implementation(Dependencies.datastore)
+    implementation(Dependencies.protoBufJavaLite)
+    implementation(Dependencies.protoBufKotlinLite)
+}
 
 fun DependencyHandler.testDeps() {
     testImplementation(TestDependencies.ANDROIDX_JUNIT)
@@ -89,5 +94,10 @@ fun DependencyHandler.presentationModule() {
 fun DependencyHandler.datastoreModule() {
     moduleImplementation(project(":core:datastore"))
 }
+
+fun DependencyHandler.protodatastoreModule() {
+    moduleImplementation(project(":core:protodatastore"))
+}
+
 
 

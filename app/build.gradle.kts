@@ -11,6 +11,7 @@ import deps.hilt
 import deps.loginModule
 import deps.okHttp
 import deps.presentationModule
+import deps.protodatastoreModule
 import deps.retrofit
 import deps.room
 import deps.testDebugDeps
@@ -112,6 +113,7 @@ dependencies {
     domainModule()
     datastoreModule()
     presentationModule()
+    protodatastoreModule()
     androidx()
     dataStore()
     hilt()
