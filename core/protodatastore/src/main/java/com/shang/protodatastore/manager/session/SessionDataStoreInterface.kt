@@ -1,4 +1,4 @@
-package com.shang.protodatastore.manager
+package com.shang.protodatastore.manager.session
 
 import com.shang.protodatastore.Session
 import kotlinx.coroutines.flow.Flow

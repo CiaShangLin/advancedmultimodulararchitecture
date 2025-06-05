@@ -1,4 +1,4 @@
-package com.shang.protodatastore.manager
+package com.shang.protodatastore.manager.session
 
 import androidx.datastore.core.DataStore
 import com.shang.protodatastore.Session

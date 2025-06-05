@@ -1,4 +1,4 @@
-package com.shang.protodatastore.manager
+package com.shang.protodatastore.manager.preferences
 
 import kotlinx.coroutines.flow.Flow
 
