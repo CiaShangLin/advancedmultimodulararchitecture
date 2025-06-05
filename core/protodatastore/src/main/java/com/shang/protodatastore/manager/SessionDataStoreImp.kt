@@ -69,7 +69,7 @@ class SessionDataStoreImp(private val sessionDataStore: DataStore<Session>) :
 getSession(): Session: This function returns a single instance of Session synchronously using the first() operator.
  It waits for the first emitted value from the sessionDataStore.data flow and returns it immediately.
  This is useful when you want to retrieve the current session data and use it immediately in your code.
-    */
+     */
     override suspend fun getSession(): Session {
         return sessionDataStore.data.first()
     }
@@ -79,11 +79,10 @@ getSession(): Session: This function returns a single instance of Session synchr
   It doesn't retrieve the session data immediately but instead provides a stream of session data over time.
   This is useful when you want to observe changes to the session data continuously.
   You can collect or observe this flow in your code and react to any changes to the session data as they occur.
- */
+     */
     override fun getSessionFlow(): Flow<Session> {
         return sessionDataStore.data.map { session ->
             session
         }
     }
-
 }

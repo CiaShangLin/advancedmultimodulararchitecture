@@ -1,9 +1,7 @@
 package com.shang.protodatastore.manager
 
-
 import com.shang.protodatastore.Session
 import kotlinx.coroutines.flow.Flow
-
 
 interface SessionDataStoreInterface {
     // setter functions
@@ -26,5 +24,4 @@ interface SessionDataStoreInterface {
 
     suspend fun getSession(): Session
     fun getSessionFlow(): Flow<Session>
-
 }
