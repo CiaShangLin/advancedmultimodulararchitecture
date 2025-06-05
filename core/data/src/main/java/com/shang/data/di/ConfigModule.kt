@@ -1,10 +1,14 @@
 package com.shang.data.di
 
+import com.shang.protodatastore.manager.preferences.PreferencesDataStoreInterface
+import com.shang.protodatastore.manager.session.SessionDataStoreInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.runBlocking
 import java.util.Locale
+import java.util.UUID
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -15,28 +19,43 @@ class ConfigModule {
     @Provides
     @Singleton
     @Named(USER_ID_TAG)
-    fun provideUserId(): () -> String? {
-        return { "" } // todo get user id from user prefs later
+    fun provideUserId(sessionDataStoreInterface: SessionDataStoreInterface): () -> String? {
+        val userId = runBlocking {
+            sessionDataStoreInterface.getUserId()
+        }
+        return { userId }
     }
 
     @Provides
     @Singleton
     @Named(LANGUAGE_TAG)
-    fun provideLanguage(): () -> Locale {
-        return { Locale.ENGLISH } // todo get locale from user prefs later, move me to config module
+    fun provideLanguage(preferencesDataStoreInterface: PreferencesDataStoreInterface): () -> Locale {
+        val language = runBlocking {
+            preferencesDataStoreInterface.getLanguage()
+        }
+        return {
+            if (language.isNotEmpty()) {
+                Locale(language)
+            } else {
+                Locale.ENGLISH
+            }
+        }
     }
 
     @Provides
     @Singleton
     @Named(ACCESS_TOKEN_TAG)
-    fun provideAccessToken(): () -> String? {
-        return { "" } // todo get access token from user prefs later, move me to config module
+    fun provideAccessToken(sessionDataStoreInterface: SessionDataStoreInterface): () -> String? {
+        val accessToken = runBlocking {
+            sessionDataStoreInterface.getAccessToken()
+        }
+        return { accessToken }
     }
 
     @Provides
     @Singleton
     @Named(CLIENT_ID_TAG)
     fun provideClientId(): String {
-        return "" // todo get client id from user prefs later, move me to config module
+        return UUID.randomUUID().toString()
     }
 }
