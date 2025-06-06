@@ -6,13 +6,17 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import com.shang.data.BuildConfig
 import com.shang.data.interceptors.AUTHORIZATION_HEADER
+import com.shang.data.interceptors.AuthenticationIntercept
 import com.shang.data.interceptors.CLIENT_ID_HEADER
 import com.shang.data.interceptors.HeaderIntercept
+import com.shang.data.service.SessionService
+import com.shang.protodatastore.manager.session.SessionDataStoreInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.Locale
@@ -55,6 +59,22 @@ class InterceptorsModule {
         }
 
         return interceptor
+    }
+
+    // Http Logging Interceptor
+    @Provides
+    @Singleton
+    @Named(AUTHENTICATION_INTERCEPTOR_TAG)
+    fun provideAuthenticationInterceptor(
+        sessionDataStoreInterface: SessionDataStoreInterface,
+        sessionService: SessionService,
+        @Named(DISPATCHER_IO_TAG) coroutineDispatcher: CoroutineDispatcher,
+    ): Interceptor {
+        return AuthenticationIntercept(
+            sessionDataStoreInterface,
+            sessionService,
+            coroutineDispatcher,
+        )
     }
 
     @Provides

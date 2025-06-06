@@ -8,8 +8,10 @@ import com.shang.data.OkHttpClientProvider
 import com.shang.data.connectivity.NetworkMonitorImp
 import com.shang.data.connectivity.NetworkMonitorInterface
 import com.shang.data.factory.ServiceFactory
+import com.shang.data.interceptors.AuthenticationIntercept
 import com.shang.data.interceptors.HeaderIntercept
 import com.shang.data.okhttp.OkhttpClientProviderInterface
+import com.shang.data.service.SessionService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,12 +52,14 @@ class NetworkModule {
         @Named(LOGGING_INTERCEPTOR_TAG) OkhttpLoggerIntercept: HttpLoggingInterceptor,
         @Named(HEADER_INTERCEPTOR_TAG) headerIntercept: HeaderIntercept,
         @Named(CHUCKER_INTERCEPTOR_TAG) chuckerIntercept: HeaderIntercept,
+        @Named(AUTHENTICATION_INTERCEPTOR_TAG) authenticationIntercept: AuthenticationIntercept,
         okhttpClientProvider: OkhttpClientProviderInterface,
     ): Call.Factory {
         return okhttpClientProvider.getOkHttpClient(BuildConfig.PIN_CERTIFICATE)
             .addInterceptor(OkhttpLoggerIntercept)
             .addInterceptor(headerIntercept)
             .addInterceptor(chuckerIntercept)
+            .addInterceptor(authenticationIntercept)
             .retryOnConnectionFailure(true)
             .followRedirects(false)
             .followSslRedirects(false)
@@ -80,5 +84,11 @@ class NetworkModule {
     @Singleton
     fun providerServiceFactory(retrofit: Retrofit): ServiceFactory {
         return ServiceFactory(retrofit)
+    }
+
+    @Provides
+    @Singleton
+    fun providerSessionService(serviceFactory: ServiceFactory): SessionService {
+        return serviceFactory.createService(SessionService::class.java)
     }
 }
