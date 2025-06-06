@@ -13,9 +13,16 @@ class LoginRemoteImp(
     private val networkDataService: NetworkDataSource<LoginService>,
     private val loginMapper: LoginMapperInterface,
 ) : LoginRemote {
-    override suspend fun login(loginRequestBody: LoginRequestBody): OutCome<User> {
+    override suspend fun login(username: String, password: String): OutCome<User> {
         return networkDataService.performRequest(
-            request = { login(loginRequestBody).await() },
+            request = {
+                login(
+                    LoginRequestBody(
+                        username = username,
+                        password = password,
+                    ),
+                ).await()
+            },
             onSuccess = { response, _ -> OutCome.success(loginMapper.toDomain(response)) },
             onError = { errorResponse, code -> OutCome.error(errorResponse.toDomain(code)) },
         )
