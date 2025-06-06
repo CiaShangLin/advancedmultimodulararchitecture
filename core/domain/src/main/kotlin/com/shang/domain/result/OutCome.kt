@@ -1,6 +1,7 @@
-package com.shang.data.result
+package com.shang.domain.result
 
 import com.shang.domain.model.ErrorMessage
+import com.shang.domain.usecase.UseCase
 
 sealed class OutCome<T> {
     abstract fun isSuccess(): Boolean

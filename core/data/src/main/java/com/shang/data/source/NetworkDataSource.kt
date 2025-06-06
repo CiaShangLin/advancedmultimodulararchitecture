@@ -8,7 +8,7 @@ import com.shang.data.error.getErrorResponse
 import com.shang.data.interceptors.NoConnectivityException
 import com.shang.data.mapper.toDomain
 import com.shang.data.response.ErrorResponse
-import com.shang.data.result.OutCome
+import com.shang.domain.result.OutCome
 import kotlinx.coroutines.isActive
 import okhttp3.Headers
 import retrofit2.Response

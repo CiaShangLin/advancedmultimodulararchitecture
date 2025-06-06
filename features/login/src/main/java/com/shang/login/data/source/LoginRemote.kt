@@ -1,6 +1,6 @@
 package com.shang.login.data.source
 
-import com.shang.data.result.OutCome
+import com.shang.domain.result.OutCome
 import com.shang.login.data.request.LoginRequestBody
 import com.shang.login.domain.model.User
 

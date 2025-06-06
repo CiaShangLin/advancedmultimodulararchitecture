@@ -1,4 +1,4 @@
-package com.shang.data.result
+package com.shang.domain.result
 
 import kotlinx.coroutines.isActive
 import kotlin.coroutines.coroutineContext

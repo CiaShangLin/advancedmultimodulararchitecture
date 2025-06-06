@@ -1,8 +1,8 @@
 package com.shang.login.data.response
 
 import com.shang.data.mapper.toDomain
-import com.shang.data.result.OutCome
 import com.shang.data.source.NetworkDataSource
+import com.shang.domain.result.OutCome
 import com.shang.login.data.request.LoginRequestBody
 import com.shang.login.data.service.LoginService
 import com.shang.login.data.source.LoginRemote
