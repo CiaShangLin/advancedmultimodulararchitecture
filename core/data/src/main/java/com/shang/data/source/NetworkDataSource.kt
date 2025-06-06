@@ -5,8 +5,8 @@ import com.shang.data.connectivity.NetworkMonitorInterface
 import com.shang.data.di.HEADER_LOCATION
 import com.shang.data.error.getDefaultErrorResponse
 import com.shang.data.error.getErrorResponse
-import com.shang.data.error.toDomain
 import com.shang.data.interceptors.NoConnectivityException
+import com.shang.data.mapper.toDomain
 import com.shang.data.response.ErrorResponse
 import com.shang.data.result.OutCome
 import kotlinx.coroutines.isActive

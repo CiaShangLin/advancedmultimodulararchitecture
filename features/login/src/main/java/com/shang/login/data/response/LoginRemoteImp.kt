@@ -1,6 +1,6 @@
 package com.shang.login.data.response
 
-import com.shang.data.error.toDomain
+import com.shang.data.mapper.toDomain
 import com.shang.data.result.OutCome
 import com.shang.data.source.NetworkDataSource
 import com.shang.login.data.request.LoginRequestBody
