@@ -1,6 +1,6 @@
 package com.shang.data.result
 
-import com.shang.data.model.ErrorMessage
+import com.shang.domain.model.ErrorMessage
 
 interface UseCase<R> {
     suspend fun onSuccess(success: OutCome.Success<R>)

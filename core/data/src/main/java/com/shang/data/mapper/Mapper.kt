@@ -1,7 +1,7 @@
 package com.shang.data.mapper
 
-import com.shang.data.model.ErrorMessage
 import com.shang.data.response.ErrorResponse
+import com.shang.domain.model.ErrorMessage
 
 fun ErrorResponse.toDomain(code: Int): ErrorMessage {
     return ErrorMessage(
