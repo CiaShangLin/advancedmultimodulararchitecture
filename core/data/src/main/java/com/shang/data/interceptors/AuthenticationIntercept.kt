@@ -1,5 +1,6 @@
 package com.shang.data.interceptors
 
+import com.shang.data.di.BEARER
 import com.shang.data.response.TokenResponse
 import com.shang.data.service.SessionService
 import com.shang.data.source.DataSource
@@ -28,7 +29,7 @@ class AuthenticationIntercept @Inject constructor(
             sessionDataInterface.getAccessToken()
         }
         val authenticationRequest = request.newBuilder()
-            .header(AUTHORIZATION_HEADER, "Bearer $accessToken")
+            .header(AUTHORIZATION_HEADER, "$BEARER $accessToken")
             .build()
         val response = chain.proceed(authenticationRequest)
         if (response.code != DataSource.UNAUTHORISED) {
@@ -51,7 +52,7 @@ class AuthenticationIntercept @Inject constructor(
             // retry the original request with the new token
             val authenticatedRequest =
                 request.newBuilder()
-                    .header(AUTHORIZATION_HEADER, "Bearer ${tokenResponse.accessToken}").build()
+                    .header(AUTHORIZATION_HEADER, "$BEARER ${tokenResponse.accessToken}").build()
 
             val response = chain.proceed(authenticatedRequest)
 

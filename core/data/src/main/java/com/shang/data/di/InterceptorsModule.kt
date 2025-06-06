@@ -32,12 +32,10 @@ class InterceptorsModule {
     @Named(HEADER_INTERCEPTOR_TAG)
     fun provideHeaderInterceptor(
         @Named(CLIENT_ID_TAG) clientId: String,
-        @Named(ACCESS_TOKEN_TAG) accessTokenProvider: () -> String?,
         @Named(LANGUAGE_TAG) languageProvider: () -> Locale,
     ): Interceptor {
         return HeaderIntercept(
             clientId,
-            accessTokenProvider,
             languageProvider,
         )
     }
