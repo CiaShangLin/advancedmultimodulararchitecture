@@ -6,6 +6,7 @@ import com.shang.data.di.HEADER_LOCATION
 import com.shang.data.error.getDefaultErrorResponse
 import com.shang.data.error.getErrorResponse
 import com.shang.data.error.toDomain
+import com.shang.data.interceptors.NoConnectivityException
 import com.shang.data.response.ErrorResponse
 import com.shang.data.result.OutCome
 import kotlinx.coroutines.isActive
@@ -35,43 +36,39 @@ class NetworkDataSource<SERVICE>(
             )
         },
     ): OutCome<T> {
-        return if (networkMonitor.hasConnectivity()) {
-            try {
-                val response = service.request(userIdProvider())
-                val responseCode = response.code()
-                val errorBodyString = response.errorBody()?.string()
-                if (response.isSuccessful || responseCode == DataSource.SEE_OTHERS) {
-                    val body = response.body()
-                    if (body != null && body != Unit) {
-                        if (coroutineContext.isActive) {
-                            onSuccess(body, response.headers())
-                        } else {
-                            onEmpty()
-                        }
+        try {
+            val response = service.request(userIdProvider())
+            val responseCode = response.code()
+            val errorBodyString = response.errorBody()?.string()
+            if (response.isSuccessful || responseCode == DataSource.SEE_OTHERS) {
+                val body = response.body()
+                if (body != null && body != Unit) {
+                    if (coroutineContext.isActive) {
+                        return onSuccess(body, response.headers())
                     } else {
-                        val location = response.headers()[HEADER_LOCATION]
-                        if (location != null) {
-                            onRedirect(location, responseCode)
-                        } else {
-                            onEmpty()
-                        }
+                        return onEmpty()
                     }
-                } else if (errorBodyString.isNullOrEmpty()) {
-                    onError(getDefaultErrorResponse(), responseCode)
                 } else {
-                    onError(getErrorResponse(gson, errorBodyString), responseCode)
+                    val location = response.headers()[HEADER_LOCATION]
+                    if (location != null) {
+                        return onRedirect(location, responseCode)
+                    } else {
+                        return onEmpty()
+                    }
                 }
-            } catch (e: Exception) {
-                val code = when (e) {
-                    is SocketTimeoutException -> DataSource.TIMEOUT
-                    is UnknownHostException -> DataSource.UNKNOWN
-                    is SSLProtocolException, is SSLHandshakeException -> DataSource.SSL_PINNING
-                    else -> DataSource.UNKNOWN
-                }
-                onError(getDefaultErrorResponse(), code)
+            } else if (errorBodyString.isNullOrEmpty()) {
+                return onError(getDefaultErrorResponse(), responseCode)
+            } else {
+                return onError(getErrorResponse(gson, errorBodyString), responseCode)
             }
-        } else {
-            onError(getDefaultErrorResponse(), DataSource.NO_INTERNET)
+        } catch (e: Exception) {
+            val code = when (e) {
+                is SocketTimeoutException -> DataSource.TIMEOUT
+                is UnknownHostException, is NoConnectivityException -> DataSource.UNKNOWN
+                is SSLProtocolException, is SSLHandshakeException -> DataSource.SSL_PINNING
+                else -> DataSource.UNKNOWN
+            }
+            return onError(getDefaultErrorResponse(), code)
         }
     }
 }

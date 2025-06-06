@@ -9,6 +9,7 @@ const val HEADER_INTERCEPTOR_TAG = "HeaderInterceptor"
 const val LOGGING_INTERCEPTOR_TAG = "OkHttpLoggingInterceptor"
 const val CHUCKER_INTERCEPTOR_TAG = "ChuckerInterceptor"
 const val AUTHENTICATION_INTERCEPTOR_TAG = "AuthenticationInterceptor"
+const val CONNECTIVITY_INTERCEPTOR_TAG = "ConnectivityInterceptor"
 const val HEADER_LOCATION = "Location"
 
 const val DISPATCHER_MAIN_TAG = "dispatcherMain"

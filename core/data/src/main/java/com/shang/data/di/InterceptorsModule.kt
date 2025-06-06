@@ -5,9 +5,11 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import com.shang.data.BuildConfig
+import com.shang.data.connectivity.NetworkMonitorInterface
 import com.shang.data.interceptors.AUTHORIZATION_HEADER
 import com.shang.data.interceptors.AuthenticationIntercept
 import com.shang.data.interceptors.CLIENT_ID_HEADER
+import com.shang.data.interceptors.ConnectivityInterceptor
 import com.shang.data.interceptors.HeaderIntercept
 import com.shang.data.service.SessionService
 import com.shang.protodatastore.manager.session.SessionDataStoreInterface
@@ -101,5 +103,16 @@ class InterceptorsModule {
             // Controls Android shortcut creation.
             .createShortcut(true)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named(CONNECTIVITY_INTERCEPTOR_TAG)
+    fun provideConnectivityInterceptor(
+        networkMonitorInterface: NetworkMonitorInterface,
+    ): Interceptor {
+        return ConnectivityInterceptor(
+            networkMonitorInterface,
+        )
     }
 }

@@ -9,6 +9,7 @@ import com.shang.data.connectivity.NetworkMonitorImp
 import com.shang.data.connectivity.NetworkMonitorInterface
 import com.shang.data.factory.ServiceFactory
 import com.shang.data.interceptors.AuthenticationIntercept
+import com.shang.data.interceptors.ConnectivityInterceptor
 import com.shang.data.interceptors.HeaderIntercept
 import com.shang.data.okhttp.OkhttpClientProviderInterface
 import com.shang.data.service.SessionService
@@ -53,11 +54,13 @@ class NetworkModule {
         @Named(HEADER_INTERCEPTOR_TAG) headerIntercept: HeaderIntercept,
         @Named(CHUCKER_INTERCEPTOR_TAG) chuckerIntercept: HeaderIntercept,
         @Named(AUTHENTICATION_INTERCEPTOR_TAG) authenticationIntercept: AuthenticationIntercept,
+        @Named(CONNECTIVITY_INTERCEPTOR_TAG) connectivityInterceptor: ConnectivityInterceptor,
         okhttpClientProvider: OkhttpClientProviderInterface,
     ): Call.Factory {
         return okhttpClientProvider.getOkHttpClient(BuildConfig.PIN_CERTIFICATE)
             .addInterceptor(OkhttpLoggerIntercept)
             .addInterceptor(headerIntercept)
+            .addInterceptor(connectivityInterceptor)
             .addInterceptor(chuckerIntercept)
             .addInterceptor(authenticationIntercept)
             .retryOnConnectionFailure(true)
