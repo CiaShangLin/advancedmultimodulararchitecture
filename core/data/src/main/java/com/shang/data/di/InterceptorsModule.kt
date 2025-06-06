@@ -1,5 +1,9 @@
 package com.shang.data.di
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import com.shang.data.BuildConfig
 import com.shang.data.interceptors.AUTHORIZATION_HEADER
 import com.shang.data.interceptors.CLIENT_ID_HEADER
@@ -7,6 +11,7 @@ import com.shang.data.interceptors.HeaderIntercept
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
@@ -50,5 +55,33 @@ class InterceptorsModule {
         }
 
         return interceptor
+    }
+
+    @Provides
+    @Singleton
+    @Named(CHUCKER_INTERCEPTOR_TAG)
+    fun provideChuckerInterceptor(@ApplicationContext context: Context): Interceptor {
+        return ChuckerInterceptor.Builder(context)
+            // The previously created Collector
+            .collector(
+                ChuckerCollector(
+                    context = context,
+                    showNotification = true,
+                    retentionPeriod = RetentionManager.Period.ONE_HOUR,
+                ),
+            )
+            // The max body content length in bytes, after this responses will be truncated.
+            .maxContentLength(250_000L)
+            // List of headers to replace with ** in the Chucker UI
+            .redactHeaders(AUTHORIZATION_HEADER)
+            // Read the whole response body even when the client does not consume the response completely.
+            // This is useful in case of parsing errors or when the response body
+            // is closed before being read like in Retrofit with Void and Unit types.
+            .alwaysReadResponseBody(true)
+            // Use decoder when processing request and response bodies. When multiple decoders are installed they
+            // are applied in an order they were added.
+            // Controls Android shortcut creation.
+            .createShortcut(true)
+            .build()
     }
 }

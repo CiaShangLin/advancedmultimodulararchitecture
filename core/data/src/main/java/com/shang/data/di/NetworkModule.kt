@@ -49,11 +49,13 @@ class NetworkModule {
     fun providerOkhttpCallFactory(
         @Named(LOGGING_INTERCEPTOR_TAG) OkhttpLoggerIntercept: HttpLoggingInterceptor,
         @Named(HEADER_INTERCEPTOR_TAG) headerIntercept: HeaderIntercept,
+        @Named(CHUCKER_INTERCEPTOR_TAG) chuckerIntercept: HeaderIntercept,
         okhttpClientProvider: OkhttpClientProviderInterface,
     ): Call.Factory {
         return okhttpClientProvider.getOkHttpClient(BuildConfig.PIN_CERTIFICATE)
             .addInterceptor(OkhttpLoggerIntercept)
             .addInterceptor(headerIntercept)
+            .addInterceptor(chuckerIntercept)
             .retryOnConnectionFailure(true)
             .followRedirects(false)
             .followSslRedirects(false)

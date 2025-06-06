@@ -1,3 +1,4 @@
+import deps.chucker
 import deps.dataStore
 import deps.hilt
 import deps.okHttp
@@ -23,6 +24,7 @@ dependencies {
     okHttp()
     retrofit()
     hilt()
+    chucker()
     dataStore()
     testDeps()
     testImplDeps()

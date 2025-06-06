@@ -56,6 +56,12 @@ fun DependencyHandler.protoDataStore() {
     implementation(Dependencies.protoBufKotlinLite)
 }
 
+fun DependencyHandler.chucker() {
+    debugImplementation(Dependencies.chuckerDebug)
+    releaseImplementation(Dependencies.chuckerRelease)
+}
+
+
 fun DependencyHandler.testDeps() {
     testImplementation(TestDependencies.ANDROIDX_JUNIT)
 }
