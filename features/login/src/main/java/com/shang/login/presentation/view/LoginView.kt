@@ -25,11 +25,10 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
     var password by remember { mutableStateOf("") }
 
     Surface(modifier = Modifier.fillMaxSize()) {
-
         Column(
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             OutlinedTextField(
                 value = username,
@@ -37,7 +36,7 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
                 label = { Text(text = "Username") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(8.dp),
             )
             OutlinedTextField(
                 value = password,
@@ -45,15 +44,15 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
                 label = { Text(text = "Username") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(8.dp),
             )
 
-            Button(modifier = Modifier.fillMaxWidth(),
-                onClick = { loginViewModel.login(username, password) }) {
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { loginViewModel.login(username, password) },
+            ) {
                 Text(text = "Login")
             }
-
         }
-
     }
 }
