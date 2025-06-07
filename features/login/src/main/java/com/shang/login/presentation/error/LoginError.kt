@@ -1,4 +1,4 @@
-package com.shang.login.presentation.view
+package com.shang.login.presentation.error
 
 import com.shang.login.R
 
