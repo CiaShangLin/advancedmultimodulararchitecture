@@ -24,4 +24,7 @@ object DependenciesVersions {
     const val PROTO_BUF_JAVA = "4.27.3"
     const val PROTO_BUF_KOTLIN = "4.27.3"
     const val CHUCKER = "4.1.0"
+    const val APP_COMPAT = "1.7.0"
+    const val MATERIAL = "1.12.0"
+    const val ANDROIDX_ACTIVITY = "1.9.1"
 }

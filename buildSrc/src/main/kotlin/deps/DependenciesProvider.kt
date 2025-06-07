@@ -42,6 +42,9 @@ fun DependencyHandler.androidx() {
     implementation(Dependencies.ANDROIDX_UI_TOOLING_PREVIEW)
     implementation(Dependencies.ANDROIDX_MATERIAL3)
     implementation(Dependencies.workKtx)
+    implementation(Dependencies.APP_COMPAT)
+    implementation(Dependencies.MATERIAL)
+    implementation(Dependencies.ANDROIDX_ACTIVITY)
 }
 
 fun DependencyHandler.dataStore() {
