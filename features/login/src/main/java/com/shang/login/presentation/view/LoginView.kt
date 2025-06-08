@@ -15,6 +15,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,9 +32,11 @@ import com.shang.login.presentation.viewModel.LoginViewModel
 
 @Composable
 fun LoginScreen(loginViewState: LoginViewState, loginViewModel: LoginViewModel) {
+    var usernameValue by remember { mutableStateOf("") }
+    var passwordValue by remember { mutableStateOf("") }
     LaunchedEffect(loginViewModel) {
-        loginViewModel.viewOutput.collect{
-            when(it){
+        loginViewModel.viewOutput.collect {
+            when (it) {
                 LoginOutput.NavigateToMain -> TODO()
                 LoginOutput.NavigateToRegister -> TODO()
                 is LoginOutput.ShowError -> TODO()
@@ -48,20 +52,22 @@ fun LoginScreen(loginViewState: LoginViewState, loginViewModel: LoginViewModel) 
         ) {
             CustomTextField(
                 label = stringResource(id = R.string.username_label),
-                value = loginViewState.userName,
+                value = usernameValue,
                 errorText = stringResource(id = loginViewState.userNameError.getErrorMessage()),
                 showError = loginViewState.showUsernameError(),
             ) { userName ->
-                loginViewModel.loginInput(LoginInput.UserNameUpdated(userName))
+                usernameValue = userName
+                // loginViewModel.loginInput(LoginInput.UserNameUpdated(userName))
             }
             Spacer(modifier = Modifier.height(16.dp))
             CustomTextField(
                 label = stringResource(id = R.string.password_label),
-                value = loginViewState.password,
+                value = passwordValue,
                 errorText = stringResource(id = loginViewState.passwordError.getErrorMessage()),
                 showError = loginViewState.showPasswordError(),
             ) { password ->
-                loginViewModel.loginInput(LoginInput.PasswordUpdated(password))
+                passwordValue = password
+                // loginViewModel.loginInput(LoginInput.PasswordUpdated(password))
             }
             Spacer(modifier = Modifier.height(16.dp))
 

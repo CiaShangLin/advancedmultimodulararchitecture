@@ -7,11 +7,10 @@ import com.chuckerteam.chucker.api.RetentionManager
 import com.shang.data.BuildConfig
 import com.shang.data.connectivity.NetworkMonitorInterface
 import com.shang.data.interceptors.AUTHORIZATION_HEADER
-import com.shang.data.interceptors.AuthenticationIntercept
+import com.shang.data.interceptors.AuthenticationInterceptor
 import com.shang.data.interceptors.CLIENT_ID_HEADER
 import com.shang.data.interceptors.ConnectivityInterceptor
 import com.shang.data.interceptors.HeaderIntercept
-import com.shang.data.service.SessionService
 import com.shang.protodatastore.manager.session.SessionDataStoreInterface
 import dagger.Module
 import dagger.Provides
@@ -31,6 +30,17 @@ class InterceptorsModule {
 
     @Provides
     @Singleton
+    @Named(CONNECTIVITY_INTERCEPTOR_TAG)
+    fun provideConnectivityInterceptor(
+        networkMonitorInterface: NetworkMonitorInterface,
+    ): Interceptor {
+        return ConnectivityInterceptor(
+            networkMonitorInterface,
+        )
+    }
+
+    @Provides
+    @Singleton
     @Named(HEADER_INTERCEPTOR_TAG)
     fun provideHeaderInterceptor(
         @Named(CLIENT_ID_TAG) clientId: String,
@@ -42,37 +52,15 @@ class InterceptorsModule {
         )
     }
 
-    // Http Logging Interceptor
-    @Provides
-    @Singleton
-    @Named(LOGGING_INTERCEPTOR_TAG)
-    fun provideOkHttpLoggingInterceptor(): Interceptor {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor.Level.BODY
-        } else {
-            HttpLoggingInterceptor.Level.NONE
-        }
-        if (!BuildConfig.DEBUG) {
-            interceptor.redactHeader(CLIENT_ID_HEADER) // redact any header that contains sensitive data.
-            interceptor.redactHeader(AUTHORIZATION_HEADER) // redact any header that contains sensitive data.
-        }
-
-        return interceptor
-    }
-
-    // Http Logging Interceptor
     @Provides
     @Singleton
     @Named(AUTHENTICATION_INTERCEPTOR_TAG)
     fun provideAuthenticationInterceptor(
         sessionDataStoreInterface: SessionDataStoreInterface,
-        sessionService: SessionService,
         @Named(DISPATCHER_IO_TAG) coroutineDispatcher: CoroutineDispatcher,
     ): Interceptor {
-        return AuthenticationIntercept(
+        return AuthenticationInterceptor(
             sessionDataStoreInterface,
-            sessionService,
             coroutineDispatcher,
         )
     }
@@ -105,14 +93,22 @@ class InterceptorsModule {
             .build()
     }
 
+    // Http Logging Interceptor
     @Provides
     @Singleton
-    @Named(CONNECTIVITY_INTERCEPTOR_TAG)
-    fun provideConnectivityInterceptor(
-        networkMonitorInterface: NetworkMonitorInterface,
-    ): Interceptor {
-        return ConnectivityInterceptor(
-            networkMonitorInterface,
-        )
+    @Named(LOGGING_INTERCEPTOR_TAG)
+    fun provideOkHttpLoggingInterceptor(): Interceptor {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor.Level.BODY
+        } else {
+            HttpLoggingInterceptor.Level.NONE
+        }
+        if (!BuildConfig.DEBUG) {
+            interceptor.redactHeader(CLIENT_ID_HEADER) // redact any header that contains sensitive data.
+            interceptor.redactHeader(AUTHORIZATION_HEADER) // redact any header that contains sensitive data.
+        }
+
+        return interceptor
     }
 }

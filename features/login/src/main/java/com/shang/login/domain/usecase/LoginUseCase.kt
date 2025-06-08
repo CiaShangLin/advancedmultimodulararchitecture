@@ -4,8 +4,9 @@ import com.shang.domain.result.OutCome
 import com.shang.domain.usecase.AsyncUseCase
 import com.shang.login.data.source.LoginRemote
 import com.shang.login.domain.model.User
+import javax.inject.Inject
 
-class LoginUseCase(private val loginRemote: LoginRemote) :
+class LoginUseCase @Inject constructor(private val loginRemote: LoginRemote) :
     AsyncUseCase<LoginUseCase.Input, User>() {
 
     data class Input(val username: String, val password: String)

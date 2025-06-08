@@ -26,7 +26,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideLoginServiceFactory(serviceFactory: ServiceFactory): LoginService {
-        return serviceFactory.createService(LoginService::class.java)
+        return serviceFactory.create(LoginService::class.java)
     }
 
     @Provides

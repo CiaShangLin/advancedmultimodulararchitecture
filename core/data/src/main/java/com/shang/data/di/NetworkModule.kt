@@ -8,9 +8,6 @@ import com.shang.data.OkHttpClientProvider
 import com.shang.data.connectivity.NetworkMonitorImp
 import com.shang.data.connectivity.NetworkMonitorInterface
 import com.shang.data.factory.ServiceFactory
-import com.shang.data.interceptors.AuthenticationIntercept
-import com.shang.data.interceptors.ConnectivityInterceptor
-import com.shang.data.interceptors.HeaderIntercept
 import com.shang.data.okhttp.OkhttpClientProviderInterface
 import com.shang.data.service.BASE_URL
 import com.shang.data.service.SessionService
@@ -18,9 +15,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Call
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -33,68 +29,68 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providerGson(): Gson {
+    fun provideGson(): Gson {
         return Gson()
     }
 
     @Provides
     @Singleton
-    fun providerNetworkMonitor(context: Context): NetworkMonitorInterface {
+    fun provideNetworkMonitor(context: Context): NetworkMonitorInterface {
         return NetworkMonitorImp(context)
     }
 
     @Provides
     @Singleton
-    fun providerOkhttpClientProvider(): OkhttpClientProviderInterface {
+    fun provideOkHttpClientProvider(): OkhttpClientProviderInterface {
         return OkHttpClientProvider()
     }
 
+    // ok http factory
     @Provides
     @Singleton
-    fun providerOkhttpCallFactory(
-        @Named(LOGGING_INTERCEPTOR_TAG) OkhttpLoggerIntercept: HttpLoggingInterceptor,
-        @Named(HEADER_INTERCEPTOR_TAG) headerIntercept: HeaderIntercept,
-        @Named(CHUCKER_INTERCEPTOR_TAG) chuckerIntercept: HeaderIntercept,
-        @Named(AUTHENTICATION_INTERCEPTOR_TAG) authenticationIntercept: AuthenticationIntercept,
-        @Named(CONNECTIVITY_INTERCEPTOR_TAG) connectivityInterceptor: ConnectivityInterceptor,
-        okhttpClientProvider: OkhttpClientProviderInterface,
-    ): Call.Factory {
-        return okhttpClientProvider.getOkHttpClient(BuildConfig.PIN_CERTIFICATE)
-            .addInterceptor(OkhttpLoggerIntercept)
-            .addInterceptor(headerIntercept)
+    fun provideOkHttpCallFactory(
+        @Named(LOGGING_INTERCEPTOR_TAG) okHttpLoggingInterceptor: Interceptor,
+        @Named(HEADER_INTERCEPTOR_TAG) headerInterceptor: Interceptor,
+        @Named(CHUCKER_INTERCEPTOR_TAG) chuckerInterceptor: Interceptor,
+        @Named(CONNECTIVITY_INTERCEPTOR_TAG) connectivityInterceptor: Interceptor,
+        @Named(AUTHENTICATION_INTERCEPTOR_TAG) authenticationInterceptor: Interceptor,
+        okHttpClientProvider: OkhttpClientProviderInterface,
+    ): OkHttpClient {
+        return okHttpClientProvider.getOkHttpClient(BuildConfig.PIN_CERTIFICATE)
+            .addInterceptor(okHttpLoggingInterceptor)
+            .addInterceptor(headerInterceptor)
             .addInterceptor(connectivityInterceptor)
-            .addInterceptor(chuckerIntercept)
-            .addInterceptor(authenticationIntercept)
+            .addInterceptor(chuckerInterceptor)
+            .addInterceptor(authenticationInterceptor)
             .retryOnConnectionFailure(true)
             .followRedirects(false)
             .followSslRedirects(false)
+            .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS)
             .build()
     }
 
     @Provides
     @Singleton
-    fun providerRetrofit(okhttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val builder = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(okhttpClient)
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
-
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
         return builder.build()
     }
 
     @Provides
     @Singleton
-    fun providerServiceFactory(retrofit: Retrofit): ServiceFactory {
+    fun provideServiceFactory(retrofit: Retrofit): ServiceFactory {
         return ServiceFactory(retrofit)
     }
 
     @Provides
     @Singleton
-    fun providerSessionService(serviceFactory: ServiceFactory): SessionService {
-        return serviceFactory.createService(SessionService::class.java)
+    fun providesSessionService(serviceFactory: ServiceFactory): SessionService {
+        return serviceFactory.create(SessionService::class.java)
     }
 }

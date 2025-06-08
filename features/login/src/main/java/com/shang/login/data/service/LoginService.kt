@@ -8,17 +8,16 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-const val BASE_URL = "https://mydomain.com"
 const val EMAIL = "email"
 
 interface LoginService {
 
-    @POST("$BASE_URL/Auth/login")
+    @POST("Auth/login")
     fun login(
         @Body body: LoginRequestBody,
     ): Deferred<Response<UserResponse>>
 
-    @POST("$BASE_URL/Auth/ForgetPassword")
+    @POST("Auth/ForgetPassword")
     fun forgetPassword(
         @Query(EMAIL) email: String,
     ): Deferred<Response<Unit>>

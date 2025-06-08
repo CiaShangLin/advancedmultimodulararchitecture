@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase) : ViewModel() {
-    private var _loginViewState = LoginViewState()
+    var loginViewState = LoginViewState()
 
     private val _viewOutput: Channel<LoginOutput> = Channel()
     val viewOutput = _viewOutput.receiveAsFlow()
@@ -34,16 +34,16 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
     }
 
     private fun updateState(updateState: LoginViewState.() -> LoginViewState) {
-        _loginViewState = _loginViewState.updateState()
+        loginViewState = loginViewState.updateState()
         validate()
     }
 
     private fun validate() {
-        val userNameError: LoginError = LoginValidator.userNameError(_loginViewState.userName)
-        val passwordError: LoginError = LoginValidator.passwordError(_loginViewState.password)
+        val userNameError: LoginError = LoginValidator.userNameError(loginViewState.userName)
+        val passwordError: LoginError = LoginValidator.passwordError(loginViewState.password)
         val isLoginButtonEnabled: Boolean = LoginValidator.canDoLogin(userNameError, passwordError)
 
-        _loginViewState = _loginViewState.copy(
+        loginViewState = loginViewState.copy(
             isLoginButtonEnabled = isLoginButtonEnabled,
             userNameError = userNameError,
             passwordError = passwordError,
@@ -60,15 +60,13 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
         viewModelScope.launch {
             loginUseCase.execute(
                 input = LoginUseCase.Input(
-                    username = _loginViewState.userName,
-                    password = _loginViewState.password
+                    username = loginViewState.userName,
+                    password = loginViewState.password,
                 ),
                 onSuccess = {
-
                 },
                 onError = {
-
-                }
+                },
             )
         }
     }

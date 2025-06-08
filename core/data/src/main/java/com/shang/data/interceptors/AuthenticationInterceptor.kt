@@ -3,7 +3,7 @@ package com.shang.data.interceptors
 import com.shang.data.di.BEARER
 import com.shang.data.response.TokenResponse
 import com.shang.data.service.SessionService
-import com.shang.data.source.DataSource
+import com.shang.data.source.DataSource.Companion.UNAUTHORISED
 import com.shang.protodatastore.manager.session.SessionDataStoreInterface
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Deferred
@@ -15,33 +15,38 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-class AuthenticationIntercept @Inject constructor(
-    private val sessionDataInterface: SessionDataStoreInterface,
-    private val sessionService: SessionService,
+class AuthenticationInterceptor @Inject constructor(
+    private val sessionDataStoreInterface: SessionDataStoreInterface,
     private val coroutineDispatcher: CoroutineDispatcher,
-) :
-    Interceptor {
+) : Interceptor {
+
+    @Inject
+    lateinit var sessionService: SessionService
 
     private val mutex = Mutex()
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        val accessToken = runBlocking(coroutineDispatcher) {
-            sessionDataInterface.getAccessToken()
-        }
-        val authenticationRequest = request.newBuilder()
-            .header(AUTHORIZATION_HEADER, "$BEARER $accessToken")
-            .build()
-        val response = chain.proceed(authenticationRequest)
-        if (response.code != DataSource.UNAUTHORISED) {
+        val accessToken =
+            runBlocking(coroutineDispatcher) { sessionDataStoreInterface.getAccessToken() }
+
+        val authenticatedRequest =
+            request.newBuilder().header(AUTHORIZATION_HEADER, "$BEARER $accessToken").build()
+
+        val response = chain.proceed(authenticatedRequest)
+
+        if (response.code != UNAUTHORISED) {
+            // your access token is valid you can resume hitting APIs
             return response
         }
 
-        val tokenResponse = runBlocking {
+        // Token is un authorized so try to refresh your access token and refresh token
+
+        val tokenResponse: TokenResponse? = runBlocking {
             mutex.withLock {
                 val tokenResponse = getUpdatedToken().await()
                 tokenResponse.body().also {
-                    sessionDataInterface.setAccessToken(it?.accessToken ?: "")
-                    sessionDataInterface.setRefreshToken(it?.refreshToken ?: "")
+                    sessionDataStoreInterface.setAccessToken(it?.accessToken ?: "")
+                    sessionDataStoreInterface.setRefreshToken(it?.refreshToken ?: "")
                 }
             }
         }
@@ -52,7 +57,7 @@ class AuthenticationIntercept @Inject constructor(
             // retry the original request with the new token
             val authenticatedRequest =
                 request.newBuilder()
-                    .header(AUTHORIZATION_HEADER, "$BEARER ${tokenResponse.accessToken}").build()
+                    .header(AUTHORIZATION_HEADER, "Bearer ${tokenResponse.accessToken}").build()
 
             val response = chain.proceed(authenticatedRequest)
 
@@ -63,7 +68,7 @@ class AuthenticationIntercept @Inject constructor(
     }
 
     private suspend fun getUpdatedToken(): Deferred<retrofit2.Response<TokenResponse>> {
-        val refreshToken = sessionDataInterface.getRefreshToken()
+        val refreshToken = sessionDataStoreInterface.getRefreshToken()
         return withContext(coroutineDispatcher) {
             sessionService.getToken(refreshToken)
         }
