@@ -13,6 +13,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -23,11 +24,22 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.shang.login.R
 import com.shang.login.presentation.protocol.LoginInput
+import com.shang.login.presentation.protocol.LoginOutput
 import com.shang.login.presentation.protocol.LoginViewState
 import com.shang.login.presentation.viewModel.LoginViewModel
 
 @Composable
 fun LoginScreen(loginViewState: LoginViewState, loginViewModel: LoginViewModel) {
+    LaunchedEffect(loginViewModel) {
+        loginViewModel.viewOutput.collect{
+            when(it){
+                LoginOutput.NavigateToMain -> TODO()
+                LoginOutput.NavigateToRegister -> TODO()
+                is LoginOutput.ShowError -> TODO()
+            }
+        }
+    }
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.padding(16.dp),
