@@ -2,7 +2,6 @@ package com.shang.login.presentation.validator
 
 import com.shang.login.presentation.error.LoginError
 
-
 const val USERNAME_LENGTH = 5
 const val PASSWORD_MAX_LENGTH = 11
 const val PASSWORD_MIN_LENGTH = 6
@@ -27,7 +26,6 @@ object LoginValidator {
         }
     }
 
-
     private fun String.isAlphaNumericWithSpecialCharacters(): Boolean {
         val containsLowerCase = any { it.isLowerCase() }
         val containsUpperCase = any { it.isUpperCase() }
@@ -43,4 +41,8 @@ object LoginValidator {
         username.count() > USERNAME_LENGTH
 
     private fun String.isAlphanumeric() = matches(Regex("^[a-zA-Z0-9]*$"))
+
+    fun canDoLogin(userNameError: LoginError, passwordError: LoginError): Boolean {
+        return userNameError == LoginError.NoError && passwordError == LoginError.NoError
+    }
 }

@@ -10,4 +10,6 @@
     <string
         name="password_length_error"
     >Password length should be more than 6 and less than 11</string>
+    <string name="username_label">Username</string>
+    <string name="password_label">Password</string>
 </resources>
