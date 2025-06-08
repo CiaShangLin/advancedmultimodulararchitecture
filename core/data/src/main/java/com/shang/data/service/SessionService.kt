@@ -6,7 +6,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
 
-const val BASE_URL = "https://example.com/"
+const val BASE_URL = "https://api.mockfly.dev/mocks/98322c65-d004-4282-8967-3353907e2c39"
 const val REFRESH_TOKEN = "refreshToken"
 interface SessionService {
 
