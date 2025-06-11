@@ -3,8 +3,11 @@ package com.shang.presentation
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import com.shang.domain.model.ErrorMessage
+import com.shang.presentation.view.renderEmptyScreen
 import com.shang.presentation.view.renderErrorFullScreen
+import com.shang.presentation.view.renderErrorPopup
 import com.shang.presentation.view.renderLoadingFullScreen
+import com.shang.presentation.view.renderLoadingPopup
 
 sealed class StateRenderer<out S, O> {
 
@@ -74,11 +77,11 @@ sealed class StateRenderer<out S, O> {
             stateRenderer.block() // show this first before doing any thing
 
             when (stateRenderer) {
-//                is Empty -> renderEmpty(stateRenderer.emptyMessage)
+                is Empty -> renderEmptyScreen(stateRenderer.emptyMessage)
                 is ErrorFullScreen -> renderErrorFullScreen(stateRenderer.errorMessage, retryAction)
-//                is ErrorPopup -> renderErorrPopup(stateRenderer.errorMessage, retryAction)
+                is ErrorPopup -> renderErrorPopup(stateRenderer.errorMessage, retryAction)
                 is LoadingFullScreen -> renderLoadingFullScreen(stateRenderer.loadingMessage)
-//                is LoadingPopup -> renderLoadingPopup(stateRenderer.loadingMessage)
+                is LoadingPopup -> renderLoadingPopup(stateRenderer.loadingMessage)
                 else -> {}
             }
             return stateRenderer
