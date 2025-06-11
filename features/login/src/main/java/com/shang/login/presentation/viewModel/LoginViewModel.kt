@@ -20,10 +20,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase) : ViewModel() {
-    var loginViewState = LoginViewState()
+    private var loginViewState = LoginViewState()
 
     private val _stateRenderStateFlow = MutableStateFlow<StateRenderer<LoginViewState, User>>(StateRenderer.ScreenContent(loginViewState))
-    val stateFenderStateFlow: StateFlow<StateRenderer<LoginViewState, User>> = _stateRenderStateFlow
+    val stateRenderStateFlow: StateFlow<StateRenderer<LoginViewState, User>> = _stateRenderStateFlow
 
     private val _viewOutput: Channel<LoginOutput> = Channel()
     val viewOutput = _viewOutput.receiveAsFlow()

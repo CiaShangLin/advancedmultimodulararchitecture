@@ -43,7 +43,7 @@ sealed class StateRenderer<out S, O> {
         return this
     }
 
-    fun onSuccess(action: (O) -> Unit): StateRenderer<S, O> {
+    fun onSuccessState(action: (O) -> Unit): StateRenderer<S, O> {
         if (this is Success) {
             action(output)
         }
@@ -60,7 +60,7 @@ sealed class StateRenderer<out S, O> {
         return this
     }
 
-    fun onEmpty(action: () -> Unit): StateRenderer<S, O> {
+    fun onEmptyState(action: () -> Unit): StateRenderer<S, O> {
         if (this is Empty) {
             action()
         }

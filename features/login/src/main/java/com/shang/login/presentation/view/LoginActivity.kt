@@ -17,7 +17,7 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LoginScreen(viewModel.loginViewState, viewModel)
+            LoginScreen(viewModel)
         }
     }
 }
