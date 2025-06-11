@@ -55,6 +55,9 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
             userNameError = userNameError,
             passwordError = passwordError,
         )
+
+        val stateRenderer = StateRenderer.ScreenContent<LoginViewState, User>(loginViewState)
+        _stateRenderStateFlow.value = stateRenderer
     }
 
     private fun sendOutput(action: () -> LoginOutput) {
