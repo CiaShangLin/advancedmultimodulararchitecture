@@ -2,14 +2,18 @@ package com.shang.login.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shang.login.domain.model.User
 import com.shang.login.domain.usecase.LoginUseCase
 import com.shang.login.presentation.error.LoginError
 import com.shang.login.presentation.protocol.LoginInput
 import com.shang.login.presentation.protocol.LoginOutput
 import com.shang.login.presentation.protocol.LoginViewState
 import com.shang.login.presentation.validator.LoginValidator
+import com.shang.presentation.StateRenderer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,6 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase) : ViewModel() {
     var loginViewState = LoginViewState()
+
+    private val _stateRenderStateFlow = MutableStateFlow<StateRenderer<LoginViewState, User>>(StateRenderer.ScreenContent(loginViewState))
+    val stateFenderStateFlow: StateFlow<StateRenderer<LoginViewState, User>> = _stateRenderStateFlow
 
     private val _viewOutput: Channel<LoginOutput> = Channel()
     val viewOutput = _viewOutput.receiveAsFlow()
@@ -58,14 +65,20 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
 
     fun login() {
         viewModelScope.launch {
+            val newStateRenderer = StateRenderer.LoadingPopup<LoginViewState, User>(loginViewState)
+            _stateRenderStateFlow.value = newStateRenderer
             loginUseCase.execute(
                 input = LoginUseCase.Input(
                     username = loginViewState.userName,
                     password = loginViewState.password,
                 ),
                 onSuccess = {
+                    val newStateRenderer = StateRenderer.Success<LoginViewState, User>(it)
+                    _stateRenderStateFlow.value = newStateRenderer
                 },
                 onError = {
+                    val newStateRenderer = StateRenderer.ErrorPopup<LoginViewState, User>(loginViewState, it)
+                    _stateRenderStateFlow.value = newStateRenderer
                 },
             )
         }
