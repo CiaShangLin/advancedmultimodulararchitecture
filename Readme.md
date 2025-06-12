@@ -1,4 +1,4 @@
-# 現代 Android 多模組化實戰課程心得整理
+# Android 多模組化實戰課程心得整理
 
 教學影片網址：[Udemy 課程連結](https://www.udemy.com/course/mastering-multi-modular-clean-architecture-in-android/)
 
