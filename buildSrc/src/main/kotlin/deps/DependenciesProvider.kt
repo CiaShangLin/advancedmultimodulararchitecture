@@ -95,6 +95,10 @@ fun DependencyHandler.homeModule() {
     moduleImplementation(project(":features:home"))
 }
 
+fun DependencyHandler.signupModule() {
+    moduleImplementation(project(":features:signup"))
+}
+
 fun DependencyHandler.dataModule() {
     moduleImplementation(project(":core:data"))
 }
@@ -118,6 +122,8 @@ fun DependencyHandler.protodatastoreModule() {
 fun DependencyHandler.navigatorModule() {
     moduleImplementation(project(":core:navigator"))
 }
+
+
 
 
 
