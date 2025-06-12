@@ -1,5 +1,12 @@
 # 現代 Android 多模組化實戰課程心得整理
 
+教學影片網址：[@ Udemy 課程連結](https://www.udemy.com/course/mastering-multi-modular-clean-architecture-in-android/learn/lecture/45680117#overview)
+教學影片的 GitHub：[@ minafarideleia/AdvancedMultiModularArchitecture](https://github.com/minafarideleia/AdvancedMultiModularArchitecture)
+
+## 個人觀後心得
+對於模組化各個層面上有了一定基礎上的了解，和編寫BuildSrc使用gradle.kts去整合各模組間的gradle依賴設定，整體來說對於模組化哪一層該依賴於哪一層，那一些東西該放在哪一層有了一定程度上的了解，在還沒看之前看過Now Android，當時就對她的core module，data module該怎麼去區分感到疑惑，而在Features Module該引入那些Module是一知半解。
+看完這個教學之後，雖然很難說在目前公司的專案上實現，但是在Flavor和QA則是可以導入到公司目前的專案使用，可以簡化QA測試時流程和步驟，自動化的設定，例如:ktlint的導入也可以有效的管理不同裝置排版和多開發者的習慣。
+
 ## 1. 可以學到什麼
 - 如何使用 Kotlin DSL（kts）整合與管理 Gradle 設定
 - 多模組（Modularization）架構設計與實作
@@ -31,10 +38,11 @@
 ## 3. 適合觀看的人
 - 想學習現代 Android 多模組化架構的開發者
 - 想了解 Gradle kts 整合與管理 Gradle 設定
+- 看了Now Android後一頭霧水的
 - 建議有幾年 Android 經歷，並對 Compose、Hilt、Retrofit、Room、Navigate 有基礎知識者
 
-## 4. 缺點
-- 內容偏重於架構與設定，對於 UI/UX 或實際業務邏輯較少著墨
-- 需要有一定 Kotlin 與 Gradle 基礎，初學者可能較難跟上
-- 部分新技術（如 toml、最新 Gradle 版本）未深入比較
-- 章節之間有時跳躍較快，需自行補充相關知識 
+## 4. 小缺點
+- 講師口音在開1.5倍速的時候聽不太清楚，只有英文字幕
+- 最後幾張繪製UI的時候有點水時間
+- 有幾層沒有詳細實作，例如:Room(Locale Data)，DataSource，Mapper之類的
+
