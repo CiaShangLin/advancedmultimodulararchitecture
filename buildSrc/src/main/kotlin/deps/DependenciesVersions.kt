@@ -30,4 +30,6 @@ object DependenciesVersions {
     const val COMPOSE_MATERIAL = "1.6.8"
     const val COMPOSE_COMPILER = "1.5.15"
     const val COMPOSE_RUNTIME = "2.6.2"
+    const val NAVIGATION = "2.7.7"
+    const val GOOGLE_GSON = "2.11.0"
 }

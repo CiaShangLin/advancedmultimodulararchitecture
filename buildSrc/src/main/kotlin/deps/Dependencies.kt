@@ -55,4 +55,11 @@ object Dependencies {
     const val COMPOSE_COMPILER =
         "androidx.compose.compiler:compiler:${DependenciesVersions.COMPOSE_COMPILER}"
     const val COMPOSE_RUNTIME = "androidx.lifecycle:lifecycle-runtime-compose:${DependenciesVersions.COMPOSE_RUNTIME}"
+
+    const val navigationFragmentKtx =
+        "androidx.navigation:navigation-fragment-ktx:${DependenciesVersions.NAVIGATION}"
+    const val navigation =
+        "androidx.navigation:navigation-ui-ktx:${DependenciesVersions.NAVIGATION}"
+    const val navigationCompose = "androidx.navigation:navigation-compose:${DependenciesVersions.NAVIGATION}"
+    const val googleJson = "com.google.code.gson:gson:${DependenciesVersions.GOOGLE_GSON}"
 }
