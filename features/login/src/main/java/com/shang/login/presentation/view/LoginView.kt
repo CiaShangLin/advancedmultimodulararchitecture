@@ -34,6 +34,8 @@ import com.shang.navigator.core.AppNavigator
 import com.shang.navigator.destination.HomeDestination
 import com.shang.navigator.destination.Screens
 import com.shang.presentation.StateRenderer
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun LoginScreen(appNavigator: AppNavigator, loginViewModel: LoginViewModel = hiltViewModel()) {
@@ -44,7 +46,7 @@ fun LoginScreen(appNavigator: AppNavigator, loginViewModel: LoginViewModel = hil
         loginViewModel.viewOutput.collect { output ->
             when (output) {
                 is LoginOutput.NavigateToMain -> {
-                    val mainOutput = output as LoginOutput.NavigateToMain
+                    val mainOutput = output
                     appNavigator.navigate(
                         HomeDestination.createHome(
                             user = mainOutput.user.toJson(),
@@ -75,9 +77,10 @@ fun LoginScreen(appNavigator: AppNavigator, loginViewModel: LoginViewModel = hil
             // ScreeUiContent(updatedState, loginViewModel)
         }
         onSuccessState { user ->
+            val encodedUserJson = URLEncoder.encode(user.toJson(), StandardCharsets.UTF_8.toString())
             appNavigator.navigate(
                 HomeDestination.createHome(
-                    user = user.toJson(),
+                    user = encodedUserJson,
                     age = 36,
                     fullName = user.fullName,
                 ),

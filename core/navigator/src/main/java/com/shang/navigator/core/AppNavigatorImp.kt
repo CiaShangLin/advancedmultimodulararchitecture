@@ -14,7 +14,7 @@ class AppNavigatorImp : AppNavigator {
     }
 
     override fun popBackStack() {
-        _navigateEvents.trySend(NavigatorEvent.PopupStack)
+        _navigateEvents.trySend(NavigatorEvent.PopBackStack)
     }
 
     override fun navigate(destination: String, builder: NavOptionsBuilder.() -> Unit): Boolean {
