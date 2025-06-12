@@ -1,4 +1,4 @@
-package com.shang.navigator
+package com.shang.navigator.core
 
 import androidx.navigation.NavOptionsBuilder
 import com.shang.navigator.event.NavigatorEvent
@@ -9,7 +9,7 @@ interface AppNavigator {
     fun navigateUp(): Boolean
     fun popBackStack()
     fun navigate(
-        route: String,
+        destination: String,
         builder: NavOptionsBuilder.() -> Unit = { launchSingleTop = true }
     ): Boolean
 
