@@ -3,6 +3,7 @@ import deps.androidx
 import deps.dataModule
 import deps.domainModule
 import deps.hilt
+import deps.navigatorModule
 import deps.presentationModule
 import deps.retrofit
 import deps.room
@@ -35,6 +36,7 @@ dependencies {
     dataModule()
     presentationModule()
     androidx()
+    navigatorModule()
     retrofit()
     hilt()
     room()

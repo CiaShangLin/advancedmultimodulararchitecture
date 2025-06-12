@@ -1,6 +1,7 @@
 package com.shang.login.presentation.protocol
 
 import com.shang.domain.model.ErrorMessage
+import com.shang.domain.model.User
 import com.shang.login.presentation.error.LoginError
 
 sealed class LoginInput {
@@ -11,7 +12,7 @@ sealed class LoginInput {
 }
 
 sealed class LoginOutput {
-    data object NavigateToMain : LoginOutput()
+    data class NavigateToMain(val user: User) : LoginOutput()
     data object NavigateToRegister : LoginOutput()
     data class ShowError(val errorMessage: ErrorMessage) : LoginOutput()
 }

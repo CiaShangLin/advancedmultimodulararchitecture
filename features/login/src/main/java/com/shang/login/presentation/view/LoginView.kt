@@ -23,40 +23,70 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.shang.domain.model.toJson
 import com.shang.login.R
 import com.shang.login.presentation.protocol.LoginInput
 import com.shang.login.presentation.protocol.LoginOutput
 import com.shang.login.presentation.protocol.LoginViewState
 import com.shang.login.presentation.viewModel.LoginViewModel
+import com.shang.navigator.core.AppNavigator
+import com.shang.navigator.destination.HomeDestination
+import com.shang.navigator.destination.Screens
 import com.shang.presentation.StateRenderer
 
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel) {
-    val statRenderer by loginViewModel.stateRenderStateFlow.collectAsState()
+fun LoginScreen(appNavigator: AppNavigator, loginViewModel: LoginViewModel = hiltViewModel()) {
+    val stateRenderer by loginViewModel.stateRenderStateFlow.collectAsState()
+    // React to viewOutput events
+
     LaunchedEffect(loginViewModel) {
-        loginViewModel.viewOutput.collect {
-            when (it) {
-                LoginOutput.NavigateToMain -> TODO()
-                LoginOutput.NavigateToRegister -> TODO()
-                is LoginOutput.ShowError -> TODO()
+        loginViewModel.viewOutput.collect { output ->
+            when (output) {
+                is LoginOutput.NavigateToMain -> {
+                    val mainOutput = output as LoginOutput.NavigateToMain
+                    appNavigator.navigate(
+                        HomeDestination.createHome(
+                            user = mainOutput.user.toJson(),
+                            age = 36,
+                            fullName = mainOutput.user.fullName,
+                        ),
+                    )
+                }
+
+                is LoginOutput.NavigateToRegister -> {
+                    appNavigator.navigate(Screens.SignUpScreenRoute.route)
+                }
+
+                is LoginOutput.ShowError -> {
+                    TODO()
+                }
             }
         }
     }
 
-    StateRenderer.of(stateRenderer = statRenderer, retryAction = { loginViewModel.login() }) {
+    // State Renderer
+
+    StateRenderer.of(stateRenderer = stateRenderer, retryAction = { loginViewModel.login() }) {
         onUiState { updatedState ->
             ScreeUiContent(updatedState, loginViewModel)
         }
-        onLoadingState { updatedState ->
-            ScreeUiContent(updatedState, loginViewModel)
+        onLoadingState { _ ->
+            // ScreeUiContent(updatedState, loginViewModel)
         }
-        onSuccessState {
-            println(it.fullName)
+        onSuccessState { user ->
+            appNavigator.navigate(
+                HomeDestination.createHome(
+                    user = user.toJson(),
+                    age = 36,
+                    fullName = user.fullName,
+                ),
+            )
         }
         onEmptyState {
         }
-        onErrorState { updatedState ->
-            ScreeUiContent(updatedState, loginViewModel)
+        onErrorState { _ ->
+            // ScreeUiContent(updatedState, loginViewModel)
         }
     }
 }

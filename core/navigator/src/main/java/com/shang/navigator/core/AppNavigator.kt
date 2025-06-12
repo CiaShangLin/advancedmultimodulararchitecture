@@ -10,7 +10,7 @@ interface AppNavigator {
     fun popBackStack()
     fun navigate(
         destination: String,
-        builder: NavOptionsBuilder.() -> Unit = { launchSingleTop = true }
+        builder: NavOptionsBuilder.() -> Unit = { launchSingleTop = true },
     ): Boolean
 
     val destinationsFlow: Flow<NavigatorEvent>
