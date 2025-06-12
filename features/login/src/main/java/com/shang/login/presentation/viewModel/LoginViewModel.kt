@@ -2,7 +2,7 @@ package com.shang.login.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shang.login.domain.model.User
+import com.shang.domain.model.User
 import com.shang.login.domain.usecase.LoginUseCase
 import com.shang.login.presentation.error.LoginError
 import com.shang.login.presentation.protocol.LoginInput

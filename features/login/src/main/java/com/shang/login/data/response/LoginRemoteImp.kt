@@ -2,12 +2,12 @@ package com.shang.login.data.response
 
 import com.shang.data.mapper.toDomain
 import com.shang.data.source.NetworkDataSource
+import com.shang.domain.model.User
 import com.shang.domain.result.OutCome
 import com.shang.login.data.request.LoginRequestBody
 import com.shang.login.data.service.LoginService
 import com.shang.login.data.source.LoginRemote
 import com.shang.login.domain.mapper.LoginMapperInterface
-import com.shang.login.domain.model.User
 
 class LoginRemoteImp(
     private val networkDataService: NetworkDataSource<LoginService>,
