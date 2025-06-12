@@ -1,7 +1,8 @@
 # 現代 Android 多模組化實戰課程心得整理
 
-教學影片網址：[@ Udemy 課程連結](https://www.udemy.com/course/mastering-multi-modular-clean-architecture-in-android/learn/lecture/45680117#overview)
-教學影片的 GitHub：[@ minafarideleia/AdvancedMultiModularArchitecture](https://github.com/minafarideleia/AdvancedMultiModularArchitecture)
+教學影片網址：[Udemy 課程連結](https://www.udemy.com/course/mastering-multi-modular-clean-architecture-in-android/)
+
+教學影片的 GitHub：[minafarideleia/AdvancedMultiModularArchitecture](https://github.com/minafarideleia/AdvancedMultiModularArchitecture)
 
 ## 個人觀後心得
 對於模組化各個層面上有了一定基礎上的了解，和編寫BuildSrc使用gradle.kts去整合各模組間的gradle依賴設定，整體來說對於模組化哪一層該依賴於哪一層，那一些東西該放在哪一層有了一定程度上的了解，在還沒看之前看過Now Android，當時就對她的core module，data module該怎麼去區分感到疑惑，而在Features Module該引入那些Module是一知半解。
