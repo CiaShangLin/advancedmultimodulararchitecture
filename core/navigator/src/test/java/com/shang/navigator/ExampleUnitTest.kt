@@ -1,4 +1,4 @@
-package com.shang.navigation
+package com.shang.navigator
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
